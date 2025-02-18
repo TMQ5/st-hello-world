@@ -3,12 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-import os
-import streamlit as st
-
-st.write("📂 قائمة الملفات في المجلد الحالي:")
-st.write(os.listdir())  # هذا سيطبع جميع الملفات في المجلد الحالي
-
 
 # تحميل البيانات من ملف الإكسل
 file_path = "Riyadh_Aqqar.xlsx"
