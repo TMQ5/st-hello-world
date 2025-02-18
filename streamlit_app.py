@@ -11,7 +11,7 @@ st.write(os.listdir())  # هذا سيطبع جميع الملفات في الم�
 
 
 # تحميل البيانات من ملف الإكسل
-file_path = "/mnt/data/Riyadh_Aqqar.xlsx"
+file_path = "Riyadh_Aqqar.xlsx"
 df_land = pd.read_excel(file_path, sheet_name="Land (الاراضي)")
 df_villas = pd.read_excel(file_path, sheet_name="Villas (الفلل)")
 df_apartments = pd.read_excel(file_path, sheet_name="Apartments (الشقق)")
