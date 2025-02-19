@@ -132,6 +132,7 @@ df_filtered_apartments = df_apartments[(df_apartments['المساحة'] <= 300) 
 # حساب المتوسط لكل حي
 district_avg_space_apartments = df_filtered_apartments.groupby('الحي')['المساحة'].mean().reset_index()
 district_avg_space_apartments = district_avg_space_apartments.sort_values(by='المساحة', ascending=True)
+district_avg_space_apartments = district_avg_space_apartments.head(10)
 
 # رسم Bar Plot
 axes[3, 0].set_title(title_apartments, fontsize=14)
@@ -153,6 +154,7 @@ df_filtered_villas = df_villas[(df_villas['المساحة'] <= 300) &
 # حساب المتوسط لكل حي
 district_avg_space_villas = df_filtered_villas.groupby('الحي')['المساحة'].mean().reset_index()
 district_avg_space_villas = district_avg_space_villas.sort_values(by='المساحة', ascending=True)
+district_avg_space_villas = district_avg_space_villas.head(10)
 
 # رسم Bar Plot
 axes[3, 1].set_title(title_villas, fontsize=14)
