@@ -52,8 +52,8 @@ top_cheapest_districts = district_avg_price.head(10)
 
 # تجهيز النصوص العربية للرسم الثاني
 title_text_2 = get_display(arabic_reshaper.reshape('ما هي الأحياء الأقل سعرًا في متوسط السعر الإجمالي'))
-xlabel_text_2 = get_display(arabic_reshaper.reshape('الحي'))
-ylabel_text_2 = get_display(arabic_reshaper.reshape('متوسط السعر الإجمالي'))
+xlabel_text_2 = get_display(arabic_reshaper.reshape(' متوسط السعر الإجمالي'))
+ylabel_text_2 = get_display(arabic_reshaper.reshape('الحي'))
 
 # رسم مخطط متوسط السعر
 fig2, ax2 = plt.subplots(figsize=(6, 4))
