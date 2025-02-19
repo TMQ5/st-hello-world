@@ -355,27 +355,27 @@ st.markdown("""
 
 
 
+district_avg_space_apartments = None  # تأكد من تعريفه حتى لو لم تتحقق الشروط
+
+if not df_apartments.empty:
+    district_avg_space_apartments = df_apartments.groupby('الحي')['المساحة'].mean().reset_index()
+
 try:
-    district_avg_space_apartments = None
-    if district_avg_space_apartments is not None and not district_avg_space_apartments.empty:
-        sns.barplot(x=district_avg_space_apartments['المساحة'], 
-                    y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']], 
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    if isinstance(district_avg_space_apartments, pd.DataFrame) and not district_avg_space_apartments.empty:
+        sns.barplot(x=district_avg_space_apartments['المساحة'],
+                    y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']],
                     palette=palette_apartments, ax=axes[0])
     else:
         st.warning("⚠️ لا توجد بيانات كافية لعرض مقارنة المساحات للشقق.")
 
-    if district_avg_space_villas is not None and not district_avg_space_villas.empty:
-        sns.barplot(x=district_avg_space_villas['المساحة'], 
-                    y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_villas['الحي']], 
-                    palette=palette_villas, ax=axes[1])
-    else:
-        st.warning("⚠️ لا توجد بيانات كافية لعرض مقارنة المساحات للفلل.")
-    
     plt.tight_layout()
     st.pyplot(fig)
 
 except Exception as e:
-    st.error(f"حدث خطأ أثناء رسم المخططات: {e}")
+    st.error(f"❌ حدث خطأ أثناء رسم المخططات: {e}")
+
 
 
 
