@@ -356,6 +356,7 @@ st.markdown("""
 
 
 try:
+    district_avg_space_apartments = None
     if district_avg_space_apartments is not None and not district_avg_space_apartments.empty:
         sns.barplot(x=district_avg_space_apartments['المساحة'], 
                     y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']], 
