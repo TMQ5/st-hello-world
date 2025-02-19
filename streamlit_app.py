@@ -113,11 +113,11 @@ district_avg_space_apartments = district_avg_space_apartments.sort_values(by='ا
 district_avg_space_apartments = district_avg_space_apartments.head(10)
 
 # رسم Bar Plot
-axes[3, 0].set_title(title_apartments, fontsize=14)
+axes[3, 1].set_title(title_apartments, fontsize=14)
 sns.barplot(x=district_avg_space_apartments['المساحة'], y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']], 
             palette=palette_apartments, ax=axes[3, 0])
-axes[3, 0].set_xlabel(ylabel_apartments, fontsize=12)
-axes[3, 0].set_ylabel(xlabel_apartments, fontsize=12)
+axes[3, 1].set_xlabel(ylabel_apartments, fontsize=12)
+axes[3, 1].set_ylabel(xlabel_apartments, fontsize=12)
 
 # 6️⃣  مقارنة المساحات في الأحياء المختلفة للفلل
 title_villas = get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للفلل"))
@@ -135,11 +135,11 @@ district_avg_space_villas = district_avg_space_villas.sort_values(by='المسا
 district_avg_space_villas = district_avg_space_villas.head(10)
 
 # رسم Bar Plot
-axes[3, 1].set_title(title_villas, fontsize=14)
+axes[3, 0].set_title(title_villas, fontsize=14)
 sns.barplot(x=district_avg_space_villas['المساحة'], y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_villas['الحي']], 
             palette=palette_villas, ax=axes[3, 1])
-axes[3, 1].set_xlabel(ylabel_villas, fontsize=12)
-axes[3, 1].set_ylabel(xlabel_villas, fontsize=12)
+axes[3, 0].set_xlabel(ylabel_villas, fontsize=12)
+axes[3, 0].set_ylabel(xlabel_villas, fontsize=12)
 
 
 # حساب عدد الشقق لكل عدد غرف
