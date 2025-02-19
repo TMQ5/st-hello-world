@@ -55,7 +55,7 @@ fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
 # تحديد الألوان: 
 palette_apartments = "mako"  # ألوان خاصة بالشقق
-palette_villas = "rocket"  # ألوان خاصة بالفلل
+palette_villas = "magma"  # ألوان خاصة بالفلل
 
 # 1️⃣ عدد الشقق في كل حي
 axes[0, 0].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء التي تحتوي على أكبر عدد من الشقق؟")))
