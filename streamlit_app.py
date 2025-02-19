@@ -6,7 +6,7 @@ import arabic_reshaper
 from bidi.algorithm import get_display
 import matplotlib.ticker as ticker
 
-# إعداد الصفحة يجب أن يكون أول أمر في التطبيق
+# يجب أن يكون أول أمر في التطبيق قبل أي كود Streamlit آخر
 st.set_page_config(layout="wide")
 
 # إضافة صورة الهيدر
@@ -22,8 +22,8 @@ try:
     df_apartments = pd.read_csv("apartments_data_cleaned.csv")
     df_villas = pd.read_csv("villas_data_cleaned.csv")
 except FileNotFoundError:
-    st.error("❌ لم يتم العثور على ملفات البيانات، تأكد من تحميل 'apartments_data_cleaned.csv' و 'villas_data_cleaned.csv'.")
-    st.stop()
+    st.error("❌ لم يتم العثور على ملفات البيانات
+
 
 
 # إعداد الصفحة والعنوان
