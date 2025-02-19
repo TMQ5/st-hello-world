@@ -171,12 +171,21 @@ st.pyplot(fig)
 # رسالة ختامية
 st.markdown("<div style='text-align: center; direction: rtl; background-color: #eafbea; padding: 10px; border-radius: 10px;'>🎉  ✨🔮 الحين جاء دورك!😁 وش رأيك تختار بيت العمر المثالي وتستمتع بتحليل البيانات   🏡</div>", unsafe_allow_html=True)
 
+# تنظيف عمود الحي بإزالة المسافات الزائدة في البداية والنهاية
+df_apartments['الحي'] = df_apartments['الحي'].astype(str).str.strip()
+df_villas['الحي'] = df_villas['الحي'].astype(str).str.strip()
+
 # تصفية البيانات لاستبعاد "الرياض" والقيم الفارغة
 df_apartments_filtered = df_apartments[(df_apartments['الحي'] != 'الرياض') & (df_apartments['الحي'].notna())]
 df_villas_filtered = df_villas[(df_villas['الحي'] != 'الرياض') & (df_villas['الحي'].notna())]
 
+
+
+
 # اختيار نوع العقار
 property_type = st.radio("🏡 اختر نوع العقار:", ["شقة", "فيلا"])
+
+
 
 # اختيار الحي بناءً على نوع العقار
 if property_type == "شقة":
