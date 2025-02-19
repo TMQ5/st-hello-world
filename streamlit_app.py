@@ -172,9 +172,6 @@ st.pyplot(fig)
 # رسالة ختامية
 st.markdown("<div style='text-align: center; direction: rtl; background-color: #eafbea; padding: 10px; border-radius: 10px;'>🎉 استمتع بتحليل البيانات واختيار بيت العمر المثالي 🏡</div>", unsafe_allow_html=True)
 
-# تصفية البيانات لاستبعاد "الرياض" والقيم الفارغة
-df_apartments_filtered = df_apartments[(df_apartments['الحي'] != 'الرياض') & (df_apartments['الحي'].notna())]
-df_villas_filtered = df_villas[(df_villas['الحي'] != 'الرياض') & (df_villas['الحي'].notna())]
 
 
 # تصفية البيانات لاستبعاد "الرياض" والقيم الفارغة
@@ -182,23 +179,24 @@ df_apartments_filtered = df_apartments[(df_apartments['الحي'] != 'الريا
 df_villas_filtered = df_villas[(df_villas['الحي'] != 'الرياض') & (df_villas['الحي'].notna())]
 
 # اختيار نوع العقار
-property_type = st.radio("اختر نوع العقار:", ["شقة", "فيلا"])
+st.markdown("<h4 style='text-align: right; direction: rtl;'>🏠 اختر نوع العقار:</h4>", unsafe_allow_html=True)
+property_type = st.radio("", ["شقة", "فيلا"], horizontal=True)
 
 # اختيار الحي بناءً على نوع العقار
 if property_type == "شقة":
-    selected_district = st.selectbox("اختر الحي:", df_apartments_filtered['الحي'].unique())
+    selected_district = st.selectbox("📍 اختر الحي:", sorted(df_apartments_filtered['الحي'].unique()))
     filtered_df = df_apartments_filtered[df_apartments_filtered['الحي'] == selected_district]
 else:
-    selected_district = st.selectbox("اختر الحي:", df_villas_filtered['الحي'].unique())
+    selected_district = st.selectbox("📍 اختر الحي:", sorted(df_villas_filtered['الحي'].unique()))
     filtered_df = df_villas_filtered[df_villas_filtered['الحي'] == selected_district]
 
 # اختيار عدد الغرف
 room_options = sorted(filtered_df['عدد الغرف'].dropna().unique())  # إزالة القيم الفارغة
-selected_rooms = st.selectbox("اختر عدد الغرف:", room_options)
+selected_rooms = st.selectbox("🛏️ اختر عدد الغرف:", room_options)
 
 # اختيار المساحة
 space_options = sorted(filtered_df['المساحة'].dropna().unique())  # إزالة القيم الفارغة
-selected_space = st.selectbox("اختر المساحة:", space_options)
+selected_space = st.selectbox("📏 اختر المساحة:", space_options)
 
 # تصفية البيانات بناءً على عدد الغرف والمساحة
 final_filtered_df = filtered_df[(filtered_df['عدد الغرف'] == selected_rooms) & (filtered_df['المساحة'] == selected_space)]
@@ -208,8 +206,10 @@ if not final_filtered_df.empty:
     avg_price = final_filtered_df['السعر الاجمالي'].mean()
     count_properties = len(final_filtered_df)
 
-    st.markdown(f"### 📊 الإحصائيات:")
-    st.markdown(f"- متوسط السعر الإجمالي: **{avg_price:,.0f}** ريال")
-    st.markdown(f"- عدد {property_type} بهذه المواصفات: **{count_properties}**")
+    st.markdown("<h4 style='text-align: right; direction: rtl;'>📊 الإحصائيات:</h4>", unsafe_allow_html=True)
+    st.markdown(f"<p style='text-align: right; direction: rtl;'>• متوسط السعر الإجمالي: <strong>{avg_price:,.0f}</strong> ريال</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='text-align: right; direction: rtl;'>• عدد {'الشقق' if property_type == 'شقة' else 'الفلل'} بهذه المواصفات: <strong>{count_properties}</strong></p>", unsafe_allow_html=True)
 else:
-    st.warning("❌ لا توجد عقارات بهذه المواصفات في البيانات.")
+    st.markdown("<p style='text-align: right; direction: rtl; color: red; font-size: 18px;'>❌ لا توجد عقارات بهذه المواصفات في البيانات.</p>", unsafe_allow_html=True)
+
+
