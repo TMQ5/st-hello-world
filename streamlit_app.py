@@ -208,24 +208,43 @@ if not filtered_df.empty:
     selected_space = st.selectbox("", sorted(filtered_df['المساحة'].dropna().unique())) if not filtered_df['المساحة'].dropna().empty else None
 
 
+# تأكد من أن final_filtered_df معرف دائمًا
+final_filtered_df = pd.DataFrame()
 
-# عرض النتائج بمحاذاة اليمين
+# التحقق من أن الفلترة السابقة ليست فارغة قبل تحديد عدد الغرف والمساحة
+if not filtered_df.empty:
+    # اختيار عدد الغرف
+    room_options = sorted(filtered_df['عدد الغرف'].dropna().unique())  # إزالة القيم الفارغة
+    selected_rooms = st.selectbox("🛏️ اختر عدد الغرف:", room_options) if room_options else None
+
+    # اختيار المساحة
+    space_options = sorted(filtered_df['المساحة'].dropna().unique())  # إزالة القيم الفارغة
+    selected_space = st.selectbox("📏 اختر المساحة:", space_options) if space_options else None
+
+    # تصفية البيانات بناءً على عدد الغرف والمساحة (تأكد من أن القيم ليست None)
+    if selected_rooms is not None and selected_space is not None:
+        final_filtered_df = filtered_df[
+            (filtered_df['عدد الغرف'] == selected_rooms) & 
+            (filtered_df['المساحة'] == selected_space)
+        ]
+
+# التحقق من عدم كون final_filtered_df فارغًا قبل استخدامه
 if not final_filtered_df.empty:
     avg_price = final_filtered_df['السعر الاجمالي'].mean()
     count_properties = len(final_filtered_df)
+
     st.markdown(f"""
     <div style="text-align: right;">
-        <h3>: الإحصائيات 📊</h3>
+        <h3>📊 الإحصائيات:</h3>
         <p>متوسط السعر الإجمالي: <strong>{avg_price:,.0f}</strong> ريال</p>
         <p>عدد {property_type} بهذه المواصفات: <strong>{count_properties}</strong></p>
     </div>
     """, unsafe_allow_html=True)
-
-
 else:
     st.markdown("""
     <div style="text-align: right; color: red;">
         ❌ لا توجد عقارات بهذه المواصفات في البيانات.
     </div>
     """, unsafe_allow_html=True)
+
 
