@@ -62,7 +62,7 @@ top_rooms_villas = room_counts_villas.head(10)
 
 
 # إنشاء figure و 6 محاور (subplot) بدلاً من 4
-fig, axes = plt.subplots(3, 2, figsize=(14, 15))
+fig, axes = plt.subplots(4, 2, figsize=(14, 15))
 
 # تحديد الألوان: 
 palette_apartments = "mako"  # ألوان خاصة بالشقق
