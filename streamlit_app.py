@@ -74,6 +74,11 @@ axes[0, 1].set_xlabel(get_display(arabic_reshaper.reshape("عدد الفلل")))
 axes[0, 1].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
 axes[0, 1].invert_yaxis()
 
+
+st.markdown("<p style='text-align: center; direction: rtl;'>تدور شقة في حي مليان خيارات؟ حي النرجس والملقا فيهم أكبر عدد من الشقق، يعني فرصتك تلقى اللي يناسبك أكبر!</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; direction: rtl;'>  تدور على حي مليان فلل؟ حي المونسية والرمال من الأحياء اللي فيها أكبر عدد من الفلل، مثالية لو كنت تبحث عن مساحة مستقلة.</p>", unsafe_allow_html=True)
+
+
 # 3️⃣ متوسط السعر الإجمالي للشقق
 axes[1, 0].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء الأقل سعراً في متوسط السعر الإجمالي للشقق؟")))
 sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in top_cheapest_districts_apartments['الحي']], 
