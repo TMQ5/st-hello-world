@@ -5,9 +5,23 @@ import seaborn as sns
 import arabic_reshaper
 from bidi.algorithm import get_display
 
-# تحميل بيانات الشقق
+
+# تحميل البيانات
+villas_file = "villas_data_cleaned.csv"
 apartments_file = "apartments_data_cleaned.csv"
-df_apartments = pd.read_csv(apartments_file)
+
+try:
+    df_villas = pd.read_csv(villas_file)
+    df_apartments = pd.read_csv(apartments_file)
+
+    print("🟢 الأعمدة في ملف الفلل:", df_villas.columns.tolist())
+    print("🟢 الأعمدة في ملف الشقق:", df_apartments.columns.tolist())
+
+except FileNotFoundError:
+    print("❌ أحد الملفات غير موجود، تأكد من رفع الملفات إلى Streamlit Cloud.")
+
+except Exception as e:
+    print(f"❌ حدث خطأ أثناء قراءة البيانات: {e}")
 
 # التأكد من توفر الأعمدة المطلوبة
 required_columns = ["الحي", "السعر الاجمالي"]
