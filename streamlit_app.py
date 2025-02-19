@@ -122,7 +122,7 @@ axes[2, 1].set_ylabel(get_display(arabic_reshaper.reshape("عدد الفلل")))
 # 🔹 7️⃣ مقارنة المساحات في الأحياء المختلفة للشقق
 title_apartments = get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للشقق"))
 xlabel_apartments = get_display(arabic_reshaper.reshape("الحي"))
-ylabel_apartments = get_display(arabic_reshaper.reshape("المتوسط المساحة (م²)"))
+ylabel_apartments = get_display(arabic_reshaper.reshape("متوسط المساحة (م²)"))
 
 # تصفية البيانات للشقق
 df_filtered_apartments = df_apartments[(df_apartments['المساحة'] <= 300) & 
@@ -144,7 +144,7 @@ axes[3, 0].set_ylabel(xlabel_apartments, fontsize=12)
 # 🔹 8️⃣ مقارنة المساحات في الأحياء المختلفة للفلل
 title_villas = get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للفلل"))
 xlabel_villas = get_display(arabic_reshaper.reshape("الحي"))
-ylabel_villas = get_display(arabic_reshaper.reshape("المتوسط المساحة (م²)"))
+ylabel_villas = get_display(arabic_reshaper.reshape("متوسط المساحة (م²)"))
 
 # تصفية البيانات للفلل
 df_filtered_villas = df_villas[(df_villas['المساحة'] <= 300) & 
