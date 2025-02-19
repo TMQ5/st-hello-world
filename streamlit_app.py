@@ -188,24 +188,25 @@ df_villas_filtered = df_villas[(df_villas['الحي'] != 'الرياض') & (df_v
 property_type = st.radio("🏡 اختر نوع العقار:", ["شقة", "فيلا"])
 
 
-
 # اختيار الحي بناءً على نوع العقار
 if property_type == "شقة":
-    selected_district = st.selectbox("📍 اختر الحي:", df_apartments_filtered['الحي'].unique())
+    st.markdown("<h4 style='text-align: right;'>📍 اختر الحي:</h4>", unsafe_allow_html=True)
+    selected_district = st.selectbox("", df_apartments_filtered['الحي'].unique())
     filtered_df = df_apartments_filtered[df_apartments_filtered['الحي'] == selected_district]
 else:
-    selected_district = st.selectbox("📍 اختر الحي:", df_villas_filtered['الحي'].unique())
+    st.markdown("<h4 style='text-align: right;'>📍 اختر الحي:</h4>", unsafe_allow_html=True)
+    selected_district = st.selectbox("", df_villas_filtered['الحي'].unique())
     filtered_df = df_villas_filtered[df_villas_filtered['الحي'] == selected_district]
 
+# اختيار عدد الغرف
+if not filtered_df.empty:
+    st.markdown("<h4 style='text-align: right;'>🛏️ اختر عدد الغرف:</h4>", unsafe_allow_html=True)
+    selected_rooms = st.selectbox("", sorted(filtered_df['عدد الغرف'].dropna().unique())) if not filtered_df['عدد الغرف'].dropna().empty else None
 
-st.markdown("<h4 style='text-align: right;'>📍 اختر الحي:</h4>", unsafe_allow_html=True)
-selected_district = st.selectbox("", df_apartments_filtered['الحي'].unique())
+    # اختيار المساحة
+    st.markdown("<h4 style='text-align: right;'>📏 اختر المساحة:</h4>", unsafe_allow_html=True)
+    selected_space = st.selectbox("", sorted(filtered_df['المساحة'].dropna().unique())) if not filtered_df['المساحة'].dropna().empty else None
 
-st.markdown("<h4 style='text-align: right;'>🛏️ اختر عدد الغرف:</h4>", unsafe_allow_html=True)
-selected_rooms = st.selectbox("", room_options) if room_options else None
-
-st.markdown("<h4 style='text-align: right;'>📏 اختر المساحة:</h4>", unsafe_allow_html=True)
-selected_space = st.selectbox("", space_options) if space_options else None
 
 
 # عرض النتائج بمحاذاة اليمين
