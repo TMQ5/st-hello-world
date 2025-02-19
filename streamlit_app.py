@@ -70,19 +70,21 @@ axes[0, 1].invert_yaxis()
 
 # 3️⃣ متوسط السعر الإجمالي للشقق
 axes[1, 0].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء الأقل سعراً في متوسط السعر الإجمالي للشقق؟")))
-sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in top_cheapest_districts_apartments['الحي']], x=top_cheapest_districts_apartments['السعر الاجمالي'], palette="mako", orient='h', ax=axes[1, 0])
+sns.barplot(x=top_cheapest_districts_apartments['الحي'], y=top_cheapest_districts_apartments['السعر الاجمالي'], palette="mako", ax=axes[1, 0])
 axes[1, 0].set_xlabel(get_display(arabic_reshaper.reshape("متوسط السعر الإجمالي")))
 axes[1, 0].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
 axes[1, 0].invert_yaxis()
-axes[1, 0].xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x):,}'))
+axes[1, 0].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x):,}'))
 
 # 4️⃣ متوسط السعر الإجمالي للفلل
 axes[1, 1].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء الأقل سعراً في متوسط السعر الإجمالي للفلل؟")))
-sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in top_cheapest_districts_villas['الحي']], x=top_cheapest_districts_villas['السعر الاجمالي'], palette="mako", orient='h', ax=axes[1, 1])
+sns.barplot(x=top_cheapest_districts_villas['الحي'], y=top_cheapest_districts_villas['السعر الاجمالي'], palette="mako", ax=axes[1, 1])
 axes[1, 1].set_xlabel(get_display(arabic_reshaper.reshape("متوسط السعر الإجمالي")))
 axes[1, 1].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
 axes[1, 1].invert_yaxis()
-axes[1, 1].xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x):,}'))
+axes[1, 0].set_xticklabels(axes[1, 0].get_xticklabels(), rotation=45, ha='right')
+axes[1, 1].set_xticklabels(axes[1, 1].get_xticklabels(), rotation=45, ha='right')
+axes[1, 1].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x):,}'))
 
 # تحسين توزيع الشكل
 plt.tight_layout()
