@@ -178,8 +178,12 @@ df_villas['الحي'] = df_villas['الحي'].astype(str).str.strip()
 df_apartments_filtered = df_apartments[(df_apartments['الحي'] != 'الرياض') & (df_apartments['الحي'].notna()) & (df_apartments['الحي'] != '')]
 df_villas_filtered = df_villas[(df_villas['الحي'] != 'الرياض') & (df_villas['الحي'].notna()) & (df_villas['الحي'] != '')]
 
-# اختيار نوع العقار
-property_type = st.radio("🏡 اختر نوع العقار:", ["شقة", "فيلا"])
+# عنوان اختيار نوع العقار بنفس تنسيق الحي وعدد الغرف
+st.markdown("<h4 style='text-align: right;'>🏡 اختر نوع العقار:</h4>", unsafe_allow_html=True)
+
+# عنصر الاختيار بمحاذاة اليمين
+property_type = st.radio("", ["شقة", "فيلا"], horizontal=True)
+
 
 # اختيار الحي بناءً على نوع العقار
 st.markdown("<h4 style='text-align: right;'>:اختر الحي 📍</h4>", unsafe_allow_html=True)
