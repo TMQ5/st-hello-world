@@ -65,13 +65,7 @@ sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in top_dist
 axes[0, 0].set_xlabel(get_display(arabic_reshaper.reshape("عدد الشقق")))
 axes[0, 0].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
 axes[0, 0].invert_yaxis()
-st.pyplot(fig)
 
-st.markdown("""
-<div style="text-align: right; background-color: #f9f9f9; padding: 10px; border-radius: 10px; margin-top: 10px;">
-🔹 **تدور شقة في حي مليان خيارات؟** حي النرجس والملقا فيهم أكبر عدد من الشقق، يعني فرصتك تلقى اللي يناسبك أكبر!
-</div>
-""", unsafe_allow_html=True)
 
 # 2️⃣ عدد الفلل في كل حي
 axes[0, 1].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء التي تحتوي على أكبر عدد من الفلل؟")))
@@ -82,7 +76,6 @@ axes[0, 1].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
 axes[0, 1].invert_yaxis()
 
 
-
 # 3️⃣ متوسط السعر الإجمالي للشقق
 axes[1, 0].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء الأقل سعراً في متوسط السعر الإجمالي للشقق؟")))
 sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in top_cheapest_districts_apartments['الحي']], 
@@ -91,10 +84,6 @@ axes[1, 0].set_xlabel(get_display(arabic_reshaper.reshape("متوسط السعر
 axes[1, 0].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
 axes[1, 0].invert_yaxis()
 axes[1, 0].xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x):,}'))
-
-
-st.markdown("<p style='text-align: center; direction: rtl;'>تدور شقة في حي مليان خيارات؟ حي النرجس والملقا فيهم أكبر عدد من الشقق، يعني فرصتك تلقى اللي يناسبك أكبر!</p>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; direction: rtl;'>  تدور على حي مليان فلل؟ حي المونسية والرمال من الأحياء اللي فيها أكبر عدد من الفلل، مثالية لو كنت تبحث عن مساحة مستقلة.</p>", unsafe_allow_html=True)
 
 
 # 4️⃣ متوسط السعر الإجمالي للفلل
