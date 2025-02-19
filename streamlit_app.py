@@ -355,6 +355,7 @@ st.markdown("""
 
 
 
+
 # **تجهيز النصوص العربية**
 title_text_apartments = get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للشقق"))
 title_text_villas = get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للفلل"))
@@ -375,9 +376,9 @@ df_filtered_villas = df_villas[(df_villas['المساحة'] <= 300) &
 district_avg_space_apartments = df_filtered_apartments.groupby('الحي')['المساحة'].mean().reset_index()
 district_avg_space_villas = df_filtered_villas.groupby('الحي')['المساحة'].mean().reset_index()
 
-# **ترتيب الأحياء حسب المتوسط المساحة**
-district_avg_space_apartments = district_avg_space_apartments.sort_values(by='المساحة', ascending=True)
-district_avg_space_villas = district_avg_space_villas.sort_values(by='المساحة', ascending=True)
+# **ترتيب الأحياء حسب المتوسط المساحة وأخذ أول 10 فقط**
+district_avg_space_apartments = district_avg_space_apartments.sort_values(by='المساحة', ascending=True).head(10)
+district_avg_space_villas = district_avg_space_villas.sort_values(by='المساحة', ascending=True).head(10)
 
 # **رسم المخططين جنبًا إلى جنب**
 fig, axes = plt.subplots(1, 2, figsize=(14, 6))
@@ -399,7 +400,7 @@ axes[1].set_xlabel(ylabel_text, fontsize=12)
 axes[1].set_ylabel(xlabel_text, fontsize=12)
 
 # **إضافة العنوان والوصف في Streamlit**
-st.markdown("<h4 style='text-align: center;'>📊 مقارنة المساحات في الأحياء المختلفة للشقق والفلل</h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center;'>📊 مقارنة المساحات في الأحياء المختلفة للشقق والفلل (أفضل 10 أحياء فقط)</h4>", unsafe_allow_html=True)
 
 # **عرض المخططات في Streamlit**
 plt.tight_layout()
