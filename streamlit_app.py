@@ -6,9 +6,13 @@ import arabic_reshaper
 from bidi.algorithm import get_display
 import matplotlib.ticker as ticker
 
+# إعداد الصفحة يجب أن يكون أول أمر في التطبيق
+st.set_page_config(layout="wide")
+
+# إضافة صورة الهيدر
 st.markdown("""
 <div style="text-align: center;">
-    <img src="https://cdn.discordapp.com/attachments/1340682396156039210/1341820998743494676/banner-riyadh-city-flat-line-style-riyadh-city-line-art-all-linear-buildings-separated-customizable_310772-133-removebg-preview.png?ex=67b763af&is=67b6122f&hm=97ec2b4d2ebf88c460ece4c630406ed37a2c68d125088440ecfb57cfd4cfb181&" 
+    <img src="https://cdn.discordapp.com/attachments/1340682396156039210/1341820998743494676/banner-riyadh-city-flat-line-style-riyadh-city-line-art-all-linear-buildings-separated-customizable_310772-133-removebg-preview.png" 
          alt="Riyadh City Banner" width="100%">
 </div>
 """, unsafe_allow_html=True)
@@ -18,8 +22,9 @@ try:
     df_apartments = pd.read_csv("apartments_data_cleaned.csv")
     df_villas = pd.read_csv("villas_data_cleaned.csv")
 except FileNotFoundError:
-    st.error("❌ لم يتم العثور على ملفات البيانات. تأكد من تحميل 'apartments_data_cleaned.csv' و 'villas_data_cleaned.csv'.")
+    st.error("❌ لم يتم العثور على ملفات البيانات، تأكد من تحميل 'apartments_data_cleaned.csv' و 'villas_data_cleaned.csv'.")
     st.stop()
+
 
 # إعداد الصفحة والعنوان
 st.set_page_config(layout="wide")
