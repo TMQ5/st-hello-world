@@ -84,6 +84,11 @@ axes[1, 0].set_xlabel(get_display(arabic_reshaper.reshape("متوسط السعر
 axes[1, 0].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
 axes[1, 0].invert_yaxis()
 axes[1, 0].xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x):,}'))
+st.pyplot(fig)
+
+st.markdown("<p style='text-align: center; direction: rtl;'>تدور شقة في حي مليان خيارات؟ حي النرجس والملقا فيهم أكبر عدد من الشقق، يعني فرصتك تلقى اللي يناسبك أكبر!</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; direction: rtl;'>  تدور على حي مليان فلل؟ حي المونسية والرمال من الأحياء اللي فيها أكبر عدد من الفلل، مثالية لو كنت تبحث عن مساحة مستقلة.</p>", unsafe_allow_html=True)
+
 
 # 4️⃣ متوسط السعر الإجمالي للفلل
 axes[1, 1].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء الأقل سعراً في متوسط السعر الإجمالي للفلل؟")))
@@ -97,9 +102,6 @@ axes[1, 1].xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x)
 # تدوير النصوص في المحور X
 axes[1, 0].tick_params(axis='x', rotation=45)
 axes[1, 1].tick_params(axis='x', rotation=45)
-
-st.markdown("<p style='text-align: center; direction: rtl;'>تدور شقة في حي مليان خيارات؟ حي النرجس والملقا فيهم أكبر عدد من الشقق، يعني فرصتك تلقى اللي يناسبك أكبر!</p>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; direction: rtl;'>  تدور على حي مليان فلل؟ حي المونسية والرمال من الأحياء اللي فيها أكبر عدد من الفلل، مثالية لو كنت تبحث عن مساحة مستقلة.</p>", unsafe_allow_html=True)
 
 
 # 5️⃣  مقارنة المساحات في الأحياء المختلفة للشقق
