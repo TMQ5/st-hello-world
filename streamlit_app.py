@@ -171,3 +171,40 @@ st.pyplot(fig)
 
 # رسالة ختامية
 st.markdown("<div style='text-align: center; direction: rtl; background-color: #eafbea; padding: 10px; border-radius: 10px;'>🎉 استمتع بتحليل البيانات واختيار بيت العمر المثالي 🏡</div>", unsafe_allow_html=True)
+
+
+
+
+# 🔹 اختيار نوع العقار
+property_type = st.selectbox("اختر نوع العقار:", ["شقة", "فيلا"])
+
+# 🔹 تحديد البيانات بناءً على الاختيار
+if property_type == "شقة":
+    df_selected = df_apartments
+else:
+    df_selected = df_villas
+
+# 🔹 اختيار الحي بناءً على نوع العقار
+selected_district = st.selectbox("اختر الحي:", df_selected["الحي"].unique())
+
+# 🔹 اختيار المساحة وعدد الغرف
+min_area, max_area = st.slider("اختر نطاق المساحة (م²):", int(df_selected["المساحة"].min()), int(df_selected["المساحة"].max()), (50, 200))
+min_rooms, max_rooms = st.slider("اختر نطاق عدد الغرف:", int(df_selected["عدد الغرف"].min()), int(df_selected["عدد الغرف"].max()), (2, 5))
+
+# 🔹 تصفية البيانات بناءً على الاختيارات
+filtered_data = df_selected[
+    (df_selected["الحي"] == selected_district) &
+    (df_selected["المساحة"].between(min_area, max_area)) &
+    (df_selected["عدد الغرف"].between(min_rooms, max_rooms))
+]
+
+# 🔹 عرض النتائج
+st.subheader("📊 نتائج البحث:")
+if not filtered_data.empty:
+    avg_price = filtered_data["السعر الاجمالي"].mean()
+    count_properties = len(filtered_data)
+
+    st.write(f"💰 **متوسط السعر:** {avg_price:,.0f} ريال")
+    st.write(f"🏡 **عدد العقارات المطابقة:** {count_properties}")
+else:
+    st.warning("❌ لا توجد عقارات بهذه المواصفات!")
