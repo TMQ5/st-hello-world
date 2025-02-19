@@ -338,30 +338,27 @@ plt.tight_layout()
 st.pyplot(fig)
 
 
-# التحقق من أن البيانات ليست فارغة قبل الرسم
-if not df_apartments.empty and not df_villas.empty:
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+try:
+    if district_avg_space_apartments is not None and not district_avg_space_apartments.empty:
+        sns.barplot(x=district_avg_space_apartments['المساحة'], 
+                    y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']], 
+                    palette=palette_apartments, ax=axes[0])
+    else:
+        st.warning("⚠️ لا توجد بيانات كافية لعرض مقارنة المساحات للشقق.")
 
-    # المساحات في الأحياء المختلفة للشقق
-    axes[0].set_title(get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للشقق")))
-    sns.barplot(x=district_avg_space_apartments['المساحة'], 
-                y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']], 
-                palette=palette_apartments, ax=axes[0])
-    axes[0].set_xlabel(get_display(arabic_reshaper.reshape("متوسط المساحة (م²)")))
-    axes[0].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
-
-    # المساحات في الأحياء المختلفة للفلل
-    axes[1].set_title(get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للفلل")))
-    sns.barplot(x=district_avg_space_villas['المساحة'], 
-                y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_villas['الحي']], 
-                palette=palette_villas, ax=axes[1])
-    axes[1].set_xlabel(get_display(arabic_reshaper.reshape("متوسط المساحة (م²)")))
-    axes[1].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
-
+    if district_avg_space_villas is not None and not district_avg_space_villas.empty:
+        sns.barplot(x=district_avg_space_villas['المساحة'], 
+                    y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_villas['الحي']], 
+                    palette=palette_villas, ax=axes[1])
+    else:
+        st.warning("⚠️ لا توجد بيانات كافية لعرض مقارنة المساحات للفلل.")
+    
     plt.tight_layout()
     st.pyplot(fig)
-else:
-    st.warning("⚠️ لا توجد بيانات كافية لمقارنة المساحات في الأحياء المختلفة.")
+
+except Exception as e:
+    st.error(f"حدث خطأ أثناء رسم المخططات: {e}")
+
 
 
 # التحقق من أن البيانات ليست فارغة قبل الرسم
