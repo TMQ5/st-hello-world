@@ -74,8 +74,10 @@ sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in top_dist
 axes[0, 1].set_xlabel(get_display(arabic_reshaper.reshape("عدد الفلل")))
 axes[0, 1].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
 axes[0, 1].invert_yaxis()
-
+# تحسين توزيع الشكل
+plt.tight_layout()
 st.pyplot(fig)
+
 
 # إضافة النص التحليلي بعد الرسم مباشرة
 st.markdown("""
