@@ -68,7 +68,7 @@ ax2.invert_yaxis()  # جعل الترتيب من اليمين لليسار
 
 # ضبط تنسيق الأرقام بحيث تكون كاملة بدون الصيغة العلمية
 ax2.xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x):,}'))
-plt.ticklabel_format(style='plain', axis='x')  # منع الصيغة العلمية
+ax2.xaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
 
 
 # عرض المخططات جنبًا إلى جنب
