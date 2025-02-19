@@ -198,25 +198,15 @@ else:
     filtered_df = df_villas_filtered[df_villas_filtered['الحي'] == selected_district]
 
 
+st.markdown("<h4 style='text-align: right;'>📍 اختر الحي:</h4>", unsafe_allow_html=True)
+selected_district = st.selectbox("", df_apartments_filtered['الحي'].unique())
 
-# التحقق من أن الفلترة السابقة ليست فارغة قبل تحديد عدد الغرف والمساحة
-if not filtered_df.empty:
-    # اختيار عدد الغرف
-    room_options = sorted(filtered_df['عدد الغرف'].dropna().unique())  # إزالة القيم الفارغة
-    selected_rooms = st.selectbox("🛏️ اختر عدد الغرف:", room_options) if room_options else None
+st.markdown("<h4 style='text-align: right;'>🛏️ اختر عدد الغرف:</h4>", unsafe_allow_html=True)
+selected_rooms = st.selectbox("", room_options) if room_options else None
 
-    # اختيار المساحة
-    space_options = sorted(filtered_df['المساحة'].dropna().unique())  # إزالة القيم الفارغة
-    selected_space = st.selectbox("📏 اختر المساحة:", space_options) if space_options else None
+st.markdown("<h4 style='text-align: right;'>📏 اختر المساحة:</h4>", unsafe_allow_html=True)
+selected_space = st.selectbox("", space_options) if space_options else None
 
-    # تصفية البيانات بناءً على عدد الغرف والمساحة (تأكد من أن القيم ليست None)
-    if selected_rooms is not None and selected_space is not None:
-        final_filtered_df = filtered_df[(filtered_df['عدد الغرف'] == selected_rooms) & 
-                                        (filtered_df['المساحة'] == selected_space)]
-    else:
-        final_filtered_df = pd.DataFrame()  # إذا لم تكن هناك خيارات متاحة
-else:
-    final_filtered_df = pd.DataFrame()  # في حال كان `filtered_df` فارغًا من البداية
 
 # عرض النتائج بمحاذاة اليمين
 if not final_filtered_df.empty:
