@@ -171,24 +171,41 @@ st.pyplot(fig)
 # رسالة ختامية
 st.markdown("<div style='text-align: center; direction: rtl; background-color: #eafbea; padding: 10px; border-radius: 10px;'>🎉  ✨🔮 الحين جاء دورك!😁 وش رأيك تختار بيت العمر المثالي وتستمتع بتحليل البيانات   🏡</div>", unsafe_allow_html=True)
 
+# تصفية البيانات لاستبعاد "الرياض" والقيم الفارغة
+df_apartments_filtered = df_apartments[(df_apartments['الحي'] != 'الرياض') & (df_apartments['الحي'].notna())]
+df_villas_filtered = df_villas[(df_villas['الحي'] != 'الرياض') & (df_villas['الحي'].notna())]
 
+# اختيار نوع العقار
+property_type = st.radio("🏡 اختر نوع العقار:", ["شقة", "فيلا"])
 
+# اختيار الحي بناءً على نوع العقار
+if property_type == "شقة":
+    selected_district = st.selectbox("📍 اختر الحي:", df_apartments_filtered['الحي'].unique())
+    filtered_df = df_apartments_filtered[df_apartments_filtered['الحي'] == selected_district]
+else:
+    selected_district = st.selectbox("📍 اختر الحي:", df_villas_filtered['الحي'].unique())
+    filtered_df = df_villas_filtered[df_villas_filtered['الحي'] == selected_district]
 
+# **🔹 التحقق من أن `filtered_df` يحتوي على بيانات قبل استخدامه**
+if not filtered_df.empty:
+    # اختيار عدد الغرف
+    room_options = sorted(filtered_df['عدد الغرف'].dropna().unique())  # إزالة القيم الفارغة
+    selected_rooms = st.selectbox("🛏️ اختر عدد الغرف:", room_options) if room_options else None
 
+    # اختيار المساحة
+    space_options = sorted(filtered_df['المساحة'].dropna().unique())  # إزالة القيم الفارغة
+    selected_space = st.selectbox("📏 اختر المساحة:", space_options) if space_options else None
 
-# اختيار عدد الغرف
-room_options = sorted(filtered_df['عدد الغرف'].dropna().unique())  # إزالة القيم الفارغة
-selected_rooms = st.selectbox("🛏️ اختر عدد الغرف:", room_options)
+    # تصفية البيانات بناءً على عدد الغرف والمساحة
+    if selected_rooms and selected_space:
+        final_filtered_df = filtered_df[(filtered_df['عدد الغرف'] == selected_rooms) & (filtered_df['المساحة'] == selected_space)]
+    else:
+        final_filtered_df = pd.DataFrame()
+else:
+    final_filtered_df = pd.DataFrame()
 
-# اختيار المساحة
-space_options = sorted(filtered_df['المساحة'].dropna().unique())  # إزالة القيم الفارغة
-selected_space = st.selectbox("📏 اختر المساحة:", space_options)
-
-# تصفية البيانات بناءً على عدد الغرف والمساحة
-final_filtered_df = filtered_df[(filtered_df['عدد الغرف'] == selected_rooms) & (filtered_df['المساحة'] == selected_space)]
-
-# عرض النتائج بمحاذاة اليمين
-if not final_filtered_df.empty:
+# **🔹 عرض النتائج بمحاذاة اليمين**
+if not final_filtered_df.empty():
     avg_price = final_filtered_df['السعر الاجمالي'].mean()
     count_properties = len(final_filtered_df)
 
@@ -207,4 +224,3 @@ else:
         ❌ لا توجد عقارات بهذه المواصفات في البيانات.
     </div>
     """, unsafe_allow_html=True)
-
