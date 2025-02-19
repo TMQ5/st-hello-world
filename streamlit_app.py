@@ -176,37 +176,83 @@ st.markdown("<div style='text-align: center; direction: rtl; background-color: #
 df_apartments_filtered = df_apartments[(df_apartments['الحي'] != 'الرياض') & (df_apartments['الحي'].notna())]
 df_villas_filtered = df_villas[(df_villas['الحي'] != 'الرياض') & (df_villas['الحي'].notna())]
 
-# اختيار نوع العقار
-property_type = st.radio("اختر نوع العقار:", ["شقة", "فيلا"])
 
-# اختيار الحي بناءً على نوع العقار
+
+# اختيار نوع العقار
+st.markdown("<h4 style='text-align: center; direction: rtl;'>🏠 اختر نوع العقار:</h4>", unsafe_allow_html=True)
+property_type = st.radio("", ["شقة", "فيلا"], horizontal=True)
+
+# تصفية البيانات بناءً على اختيار المستخدم
 if property_type == "شقة":
-    selected_district = st.selectbox("اختر الحي:", df_apartments_filtered['الحي'].unique())
-    filtered_df = df_apartments_filtered[df_apartments_filtered['الحي'] == selected_district]
+    filtered_df = df_apartments
 else:
-    selected_district = st.selectbox("اختر الحي:", df_villas_filtered['الحي'].unique())
-    filtered_df = df_villas_filtered[df_villas_filtered['الحي'] == selected_district]
+    filtered_df = df_villas
+
+# استثناء "الرياض" والقيم الفارغة من قائمة الأحياء
+valid_districts = filtered_df[(filtered_df['الحي'].notna()) & (filtered_df['الحي'] != "الرياض")]['الحي'].unique()
+selected_district = st.selectbox("🏙️ اختر الحي:", sorted(valid_districts))
+
+# تصفية البيانات بناءً على الحي المختار
+filtered_df = filtered_df[filtered_df['الحي'] == selected_district]
 
 # اختيار عدد الغرف
-room_options = sorted(filtered_df['عدد الغرف'].dropna().unique())  # إزالة القيم الفارغة
-selected_rooms = st.selectbox("اختر عدد الغرف:", room_options)
+room_options = sorted(filtered_df['عدد الغرف'].dropna().unique())
+selected_rooms = st.selectbox("🛏️ اختر عدد الغرف:", room_options)
 
 # اختيار المساحة
-space_options = sorted(filtered_df['المساحة'].dropna().unique())  # إزالة القيم الفارغة
-selected_space = st.selectbox("اختر المساحة:", space_options)
+space_options = sorted(filtered_df['المساحة'].dropna().unique())
+selected_space = st.selectbox("📏 اختر المساحة:", space_options)
 
-# تصفية البيانات بناءً على عدد الغرف والمساحة
+# تصفية البيانات بناءً على عدد الغرف والمساحة المختارة
 final_filtered_df = filtered_df[(filtered_df['عدد الغرف'] == selected_rooms) & (filtered_df['المساحة'] == selected_space)]
 
-# عرض النتائج
-if not final_filtered_df.empty:
-    avg_price = final_filtered_df['السعر الاجمالي'].mean()
-    count_properties = len(final_filtered_df)
+# حساب الإحصائيات
+avg_price = final_filtered_df['السعر الاجمالي'].mean()
+count_properties = final_filtered_df.shape[0]
 
-    st.markdown(f"### 📊 الإحصائيات:")
-    st.markdown(f"- متوسط السعر الإجمالي: **{avg_price:,.0f}** ريال")
-    st.markdown(f"- عدد {property_type} بهذه المواصفات: **{count_properties}**")
-else:
-    st.warning("❌ لا توجد عقارات بهذه المواصفات في البيانات.")
+# عرض الإحصائيات
+st.markdown("""
+<div style="text-align: right; direction: rtl; background-color: #eafbea; padding: 10px; border-radius: 10px;">
+<h4>📊 الإحصائيات:</h4>
+<ul>
+<li> متوسط السعر الإجمالي: {:,.0f} ريال</li>
+<li> عدد {} بهذه المواصفات: {}</li>
+</ul>
+</div>
+""".format(avg_price, "شقق" if property_type == "شقة" else "فلل", count_properties), unsafe_allow_html=True)
+
+
+# # اختيار نوع العقار
+# property_type = st.radio("اختر نوع العقار:", ["شقة", "فيلا"])
+
+# # اختيار الحي بناءً على نوع العقار
+# if property_type == "شقة":
+#     selected_district = st.selectbox("اختر الحي:", df_apartments_filtered['الحي'].unique())
+#     filtered_df = df_apartments_filtered[df_apartments_filtered['الحي'] == selected_district]
+# else:
+#     selected_district = st.selectbox("اختر الحي:", df_villas_filtered['الحي'].unique())
+#     filtered_df = df_villas_filtered[df_villas_filtered['الحي'] == selected_district]
+
+# # اختيار عدد الغرف
+# room_options = sorted(filtered_df['عدد الغرف'].dropna().unique())  # إزالة القيم الفارغة
+# selected_rooms = st.selectbox("اختر عدد الغرف:", room_options)
+
+# # اختيار المساحة
+# space_options = sorted(filtered_df['المساحة'].dropna().unique())  # إزالة القيم الفارغة
+# selected_space = st.selectbox("اختر المساحة:", space_options)
+
+# # تصفية البيانات بناءً على عدد الغرف والمساحة
+# final_filtered_df = filtered_df[(filtered_df['عدد الغرف'] == selected_rooms) & (filtered_df['المساحة'] == selected_space)]
+
+# # عرض النتائج
+# if not final_filtered_df.empty:
+#     avg_price = final_filtered_df['السعر الاجمالي'].mean()
+#     count_properties = len(final_filtered_df)
+
+#     st.markdown(f"### 📊 الإحصائيات:")
+#     st.markdown(f"- متوسط السعر الإجمالي: **{avg_price:,.0f}** ريال")
+#     st.markdown(f"- عدد {property_type} بهذه المواصفات: **{count_properties}**")
+# else:
+#     st.warning("❌ لا توجد عقارات بهذه المواصفات في البيانات.")
 
 
