@@ -1,10 +1,3 @@
-st.markdown("""
-<div style="text-align: center;">
-    <img src="https://cdn.discordapp.com/attachments/1340682396156039210/1341820998743494676/banner-riyadh-city-flat-line-style-riyadh-city-line-art-all-linear-buildings-separated-customizable_310772-133-removebg-preview.png?ex=67b763af&is=67b6122f&hm=97ec2b4d2ebf88c460ece4c630406ed37a2c68d125088440ecfb57cfd4cfb181&" 
-         alt="Riyadh City Banner" width="100%">
-</div>
-""", unsafe_allow_html=True)
-
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -12,6 +5,13 @@ import seaborn as sns
 import arabic_reshaper
 from bidi.algorithm import get_display
 import matplotlib.ticker as ticker
+
+st.markdown("""
+<div style="text-align: center;">
+    <img src="https://cdn.discordapp.com/attachments/1340682396156039210/1341820998743494676/banner-riyadh-city-flat-line-style-riyadh-city-line-art-all-linear-buildings-separated-customizable_310772-133-removebg-preview.png?ex=67b763af&is=67b6122f&hm=97ec2b4d2ebf88c460ece4c630406ed37a2c68d125088440ecfb57cfd4cfb181&" 
+         alt="Riyadh City Banner" width="100%">
+</div>
+""", unsafe_allow_html=True)
 
 # تحميل البيانات مع التحقق من وجودها
 try:
