@@ -170,7 +170,7 @@ plt.tight_layout()
 st.pyplot(fig)
 
 # رسالة ختامية
-st.markdown("<div style='text-align: center; direction: rtl; background-color: #eafbea; padding: 10px; border-radius: 10px;'>🎉 استمتع بتحليل البيانات واختيار بيت العمر المثالي 🏡</div>", unsafe_allow_html=True)
+st.markdown("<div style='text-align: center; direction: rtl; background-color: #eafbea; padding: 10px; border-radius: 10px;'>🎉  ✨🔮 الحين جاء دورك!😁 وش رأيك تختار بيت العمر المثالي وتستمتع بتحليل البيانات   🏡</div>", unsafe_allow_html=True)
 
 
 
