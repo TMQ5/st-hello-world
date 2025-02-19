@@ -107,19 +107,7 @@ axes[1, 0].tick_params(axis='x', rotation=45)
 axes[1, 1].tick_params(axis='x', rotation=45)
 
 
-# 5️⃣ توزيع عدد الغرف في الشقق
-axes[2, 0].set_title(get_display(arabic_reshaper.reshape("ما هو توزيع عدد الغرف في الشقق؟")))
-sns.barplot(x=top_rooms_apartments['عدد الغرف'], y=top_rooms_apartments['count'], palette=palette_apartments, ax=axes[2, 0])
-axes[2, 0].set_xlabel(get_display(arabic_reshaper.reshape("عدد الغرف")))
-axes[2, 0].set_ylabel(get_display(arabic_reshaper.reshape("عدد الشقق")))
-
-# 6️⃣ توزيع عدد الغرف في الفلل
-axes[2, 1].set_title(get_display(arabic_reshaper.reshape("ما هو توزيع عدد الغرف في الفلل؟")))
-sns.barplot(x=top_rooms_villas['عدد الغرف'], y=top_rooms_villas['count'], palette=palette_villas, ax=axes[2, 1])
-axes[2, 1].set_xlabel(get_display(arabic_reshaper.reshape("عدد الغرف")))
-axes[2, 1].set_ylabel(get_display(arabic_reshaper.reshape("عدد الفلل")))
-
-# 🔹 7️⃣ مقارنة المساحات في الأحياء المختلفة للشقق
+# 5️⃣  مقارنة المساحات في الأحياء المختلفة للشقق
 title_apartments = get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للشقق"))
 xlabel_apartments = get_display(arabic_reshaper.reshape("الحي"))
 ylabel_apartments = get_display(arabic_reshaper.reshape("متوسط المساحة (م²)"))
@@ -141,7 +129,7 @@ sns.barplot(x=district_avg_space_apartments['المساحة'], y=[get_display(ar
 axes[3, 0].set_xlabel(ylabel_apartments, fontsize=12)
 axes[3, 0].set_ylabel(xlabel_apartments, fontsize=12)
 
-# 🔹 8️⃣ مقارنة المساحات في الأحياء المختلفة للفلل
+# 6️⃣  مقارنة المساحات في الأحياء المختلفة للفلل
 title_villas = get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للفلل"))
 xlabel_villas = get_display(arabic_reshaper.reshape("الحي"))
 ylabel_villas = get_display(arabic_reshaper.reshape("متوسط المساحة (م²)"))
@@ -163,6 +151,17 @@ sns.barplot(x=district_avg_space_villas['المساحة'], y=[get_display(arabic
 axes[3, 1].set_xlabel(ylabel_villas, fontsize=12)
 axes[3, 1].set_ylabel(xlabel_villas, fontsize=12)
 
+# 7️⃣ توزيع عدد الغرف في الشقق
+axes[2, 0].set_title(get_display(arabic_reshaper.reshape("ما هو توزيع عدد الغرف في الشقق؟")))
+sns.barplot(x=top_rooms_apartments['عدد الغرف'], y=top_rooms_apartments['count'], palette=palette_apartments, ax=axes[2, 0])
+axes[2, 0].set_xlabel(get_display(arabic_reshaper.reshape("عدد الغرف")))
+axes[2, 0].set_ylabel(get_display(arabic_reshaper.reshape("عدد الشقق")))
+
+# 8️⃣ توزيع عدد الغرف في الفلل
+axes[2, 1].set_title(get_display(arabic_reshaper.reshape("ما هو توزيع عدد الغرف في الفلل؟")))
+sns.barplot(x=top_rooms_villas['عدد الغرف'], y=top_rooms_villas['count'], palette=palette_villas, ax=axes[2, 1])
+axes[2, 1].set_xlabel(get_display(arabic_reshaper.reshape("عدد الغرف")))
+axes[2, 1].set_ylabel(get_display(arabic_reshaper.reshape("عدد الفلل")))
 
 # تحسين توزيع الشكل
 plt.tight_layout()
