@@ -319,7 +319,7 @@ fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 # **المخطط الأول - الشقق**
 sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']], 
             x=district_avg_space_apartments['المساحة'], 
-            palette="mako", ax=axes[0])
+            palette=palette_apartments, ax=axes[0])
 axes[0].set_title(title_text_apartments, fontsize=14)
 axes[0].set_xlabel(ylabel_text, fontsize=12)
 axes[0].set_ylabel(xlabel_text, fontsize=12)
@@ -327,7 +327,7 @@ axes[0].set_ylabel(xlabel_text, fontsize=12)
 # **المخطط الثاني - الفلل**
 sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_villas['الحي']], 
             x=district_avg_space_villas['المساحة'], 
-            palette="viridis", ax=axes[1])
+            palette=palette_villas, ax=axes[1])
 axes[1].set_title(title_text_villas, fontsize=14)
 axes[1].set_xlabel(ylabel_text, fontsize=12)
 axes[1].set_ylabel(xlabel_text, fontsize=12)
