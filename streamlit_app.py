@@ -51,138 +51,93 @@ top_cheapest_districts_villas = district_avg_price_villas.head(10)
 
 
 
-# إنشاء figure و 6 محاور (subplot) بدلاً من 4
-fig, axes = plt.subplots(4, 2, figsize=(14, 15))
-
-# تحديد الألوان: 
+# تحديد الألوان:
 palette_apartments = "mako"  # ألوان خاصة بالشقق
 palette_villas = "magma"  # ألوان خاصة بالفلل
 
-# 1️⃣ عدد الشقق في كل حي
-axes[0, 0].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء التي تحتوي على أكبر عدد من الشقق؟")))
+### 1️⃣ **عدد الشقق و عدد الفلل في كل حي**
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# عدد الشقق في كل حي
+axes[0].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء التي تحتوي على أكبر عدد من الشقق؟")))
 sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in top_districts_apartments['الحي']], 
-            x=top_districts_apartments['count'], palette=palette_apartments, orient='h', ax=axes[0, 0])
-axes[0, 0].set_xlabel(get_display(arabic_reshaper.reshape("عدد الشقق")))
-axes[0, 0].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
-axes[0, 0].invert_yaxis()
+            x=top_districts_apartments['count'], palette=palette_apartments, orient='h', ax=axes[0])
+axes[0].set_xlabel(get_display(arabic_reshaper.reshape("عدد الشقق")))
+axes[0].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
+axes[0].invert_yaxis()
 
-
-# 2️⃣ عدد الفلل في كل حي
-axes[0, 1].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء التي تحتوي على أكبر عدد من الفلل؟")))
+# عدد الفلل في كل حي
+axes[1].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء التي تحتوي على أكبر عدد من الفلل؟")))
 sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in top_districts_villas['الحي']], 
-            x=top_districts_villas['count'], palette=palette_villas, orient='h', ax=axes[0, 1])
-axes[0, 1].set_xlabel(get_display(arabic_reshaper.reshape("عدد الفلل")))
-axes[0, 1].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
-axes[0, 1].invert_yaxis()
+            x=top_districts_villas['count'], palette=palette_villas, orient='h', ax=axes[1])
+axes[1].set_xlabel(get_display(arabic_reshaper.reshape("عدد الفلل")))
+axes[1].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
+axes[1].invert_yaxis()
 
-st.markdown("""
-<div style="text-align: center; background-color: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 16px;">
-    🔹 <strong>تدور شقة في حي مليان خيارات؟</strong> حي <strong>النرجس والملقا</strong> فيهم أكبر عدد من الشقق، يعني فرصتك تلقى اللي يناسبك أكبر!<br>
-    🔹 <strong>تدور على حي مليان فلل؟</strong> حي <strong>المونسية والرمال</strong> من الأحياء اللي فيها أكبر عدد من الفلل، مثالية لو كنت تبحث عن مساحة مستقلة.
-</div>
-""", unsafe_allow_html=True)
+plt.tight_layout()
+st.pyplot(fig)
 
+### 2️⃣ **متوسط السعر الإجمالي للشقق والفلل**
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-
-# 3️⃣ متوسط السعر الإجمالي للشقق
-axes[1, 0].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء الأقل سعراً في متوسط السعر الإجمالي للشقق؟")))
+# متوسط السعر الإجمالي للشقق
+axes[0].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء الأقل سعراً في متوسط السعر الإجمالي للشقق؟")))
 sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in top_cheapest_districts_apartments['الحي']], 
-            x=top_cheapest_districts_apartments['السعر الاجمالي'], palette=palette_apartments, orient='h', ax=axes[1, 0])
-axes[1, 0].set_xlabel(get_display(arabic_reshaper.reshape("متوسط السعر الإجمالي")))
-axes[1, 0].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
-axes[1, 0].invert_yaxis()
-axes[1, 0].xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x):,}'))
+            x=top_cheapest_districts_apartments['السعر الاجمالي'], palette=palette_apartments, orient='h', ax=axes[0])
+axes[0].set_xlabel(get_display(arabic_reshaper.reshape("متوسط السعر الإجمالي")))
+axes[0].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
+axes[0].invert_yaxis()
+axes[0].xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x):,}'))
 
-
-# 4️⃣ متوسط السعر الإجمالي للفلل
-axes[1, 1].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء الأقل سعراً في متوسط السعر الإجمالي للفلل؟")))
+# متوسط السعر الإجمالي للفلل
+axes[1].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء الأقل سعراً في متوسط السعر الإجمالي للفلل؟")))
 sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in top_cheapest_districts_villas['الحي']], 
-            x=top_cheapest_districts_villas['السعر الاجمالي'], palette=palette_villas, orient='h', ax=axes[1, 1])
-axes[1, 1].set_xlabel(get_display(arabic_reshaper.reshape("متوسط السعر الإجمالي")))
-axes[1, 1].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
-axes[1, 1].invert_yaxis()
-axes[1, 1].xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x):,}'))
+            x=top_cheapest_districts_villas['السعر الاجمالي'], palette=palette_villas, orient='h', ax=axes[1])
+axes[1].set_xlabel(get_display(arabic_reshaper.reshape("متوسط السعر الإجمالي")))
+axes[1].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
+axes[1].invert_yaxis()
+axes[1].xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x):,}'))
 
-# تدوير النصوص في المحور X
-axes[1, 0].tick_params(axis='x', rotation=45)
-axes[1, 1].tick_params(axis='x', rotation=45)
+plt.tight_layout()
+st.pyplot(fig)
 
-st.markdown("""
-<div style="text-align: center; background-color: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 16px;">
-    🔹 <strong>تدور شقة في حي مليان خيارات؟</strong> حي <strong>النرجس والملقا</strong> فيهم أكبر عدد من الشقق، يعني فرصتك تلقى اللي يناسبك أكبر!<br>
-    🔹 <strong>تدور على حي مليان فلل؟</strong> حي <strong>المونسية والرمال</strong> من الأحياء اللي فيها أكبر عدد من الفلل، مثالية لو كنت تبحث عن مساحة مستقلة.
-</div>
-""", unsafe_allow_html=True)
+### 3️⃣ **مقارنة المساحات للشقق والفلل**
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
+# المساحات في الأحياء المختلفة للشقق
+axes[0].set_title(get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للشقق")))
+sns.barplot(x=district_avg_space_apartments['المساحة'], 
+            y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']], 
+            palette=palette_apartments, ax=axes[0])
+axes[0].set_xlabel(get_display(arabic_reshaper.reshape("متوسط المساحة (م²)")))
+axes[0].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
 
-# 5️⃣  مقارنة المساحات في الأحياء المختلفة للشقق
-title_apartments = get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للشقق"))
-xlabel_apartments = get_display(arabic_reshaper.reshape("الحي"))
-ylabel_apartments = get_display(arabic_reshaper.reshape("متوسط المساحة (م²)"))
+# المساحات في الأحياء المختلفة للفلل
+axes[1].set_title(get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للفلل")))
+sns.barplot(x=district_avg_space_villas['المساحة'], 
+            y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_villas['الحي']], 
+            palette=palette_villas, ax=axes[1])
+axes[1].set_xlabel(get_display(arabic_reshaper.reshape("متوسط المساحة (م²)")))
+axes[1].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
 
-# تصفية البيانات للشقق
-df_filtered_apartments = df_apartments[(df_apartments['المساحة'] <= 300) & 
-                                        (df_apartments['السعر الاجمالي'] > 500) & 
-                                        (df_apartments['الحي'] != ' ')]
+plt.tight_layout()
+st.pyplot(fig)
 
-# حساب المتوسط لكل حي
-district_avg_space_apartments = df_filtered_apartments.groupby('الحي')['المساحة'].mean().reset_index()
-district_avg_space_apartments = district_avg_space_apartments.sort_values(by='المساحة', ascending=True)
-district_avg_space_apartments = district_avg_space_apartments.head(10)
+### 4️⃣ **توزيع عدد الغرف في الشقق والفلل**
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-# رسم Bar Plot
-axes[3, 1].set_title(title_apartments, fontsize=14)
-sns.barplot(x=district_avg_space_apartments['المساحة'], y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']], 
-            palette=palette_apartments, ax=axes[3, 1])
-axes[3, 1].set_xlabel(ylabel_apartments, fontsize=12)
-axes[3, 1].set_ylabel(xlabel_apartments, fontsize=12)
+# توزيع عدد الغرف في الشقق
+axes[0].set_title(get_display(arabic_reshaper.reshape("ما هو توزيع عدد الغرف في الشقق؟")))
+sns.barplot(x=top_rooms_apartments['عدد الغرف'], y=top_rooms_apartments['count'], palette=palette_apartments, ax=axes[0])
+axes[0].set_xlabel(get_display(arabic_reshaper.reshape("عدد الغرف")))
+axes[0].set_ylabel(get_display(arabic_reshaper.reshape("عدد الشقق")))
 
-# 6️⃣  مقارنة المساحات في الأحياء المختلفة للفلل
-title_villas = get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للفلل"))
-xlabel_villas = get_display(arabic_reshaper.reshape("الحي"))
-ylabel_villas = get_display(arabic_reshaper.reshape("متوسط المساحة (م²)"))
+# توزيع عدد الغرف في الفلل
+axes[1].set_title(get_display(arabic_reshaper.reshape("ما هو توزيع عدد الغرف في الفلل؟")))
+sns.barplot(x=top_rooms_villas['عدد الغرف'], y=top_rooms_villas['count'], palette=palette_villas, ax=axes[1])
+axes[1].set_xlabel(get_display(arabic_reshaper.reshape("عدد الغرف")))
+axes[1].set_ylabel(get_display(arabic_reshaper.reshape("عدد الفلل")))
 
-# تصفية البيانات للفلل
-df_filtered_villas = df_villas[(df_villas['المساحة'] <= 300) & 
-                                (df_villas['السعر الاجمالي'] > 500) & 
-                                (df_villas['الحي'] != ' ')]
-
-# حساب المتوسط لكل حي
-district_avg_space_villas = df_filtered_villas.groupby('الحي')['المساحة'].mean().reset_index()
-district_avg_space_villas = district_avg_space_villas.sort_values(by='المساحة', ascending=True)
-district_avg_space_villas = district_avg_space_villas.head(10)
-
-# رسم Bar Plot
-axes[3, 0].set_title(title_villas, fontsize=14)
-sns.barplot(x=district_avg_space_villas['المساحة'], y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_villas['الحي']], 
-            palette=palette_villas, ax=axes[3, 0])
-axes[3, 0].set_xlabel(ylabel_villas, fontsize=12)
-axes[3, 0].set_ylabel(xlabel_villas, fontsize=12)
-
-
-# حساب عدد الشقق لكل عدد غرف
-room_counts_apartments = df_apartments["عدد الغرف"].value_counts().reset_index()
-room_counts_apartments.columns = ["عدد الغرف", "count"]
-top_rooms_apartments = room_counts_apartments.head(10)
-
-# حساب عدد الفلل لكل عدد غرف
-room_counts_villas = df_villas["عدد الغرف"].value_counts().reset_index()
-room_counts_villas.columns = ["عدد الغرف", "count"]
-top_rooms_villas = room_counts_villas.head(10)
-
-# 7️⃣ توزيع عدد الغرف في الشقق
-axes[2, 0].set_title(get_display(arabic_reshaper.reshape("ما هو توزيع عدد الغرف في الشقق؟")))
-sns.barplot(x=top_rooms_apartments['عدد الغرف'], y=top_rooms_apartments['count'], palette=palette_apartments, ax=axes[2, 0])
-axes[2, 0].set_xlabel(get_display(arabic_reshaper.reshape("عدد الغرف")))
-axes[2, 0].set_ylabel(get_display(arabic_reshaper.reshape("عدد الشقق")))
-
-# 8️⃣ توزيع عدد الغرف في الفلل
-axes[2, 1].set_title(get_display(arabic_reshaper.reshape("ما هو توزيع عدد الغرف في الفلل؟")))
-sns.barplot(x=top_rooms_villas['عدد الغرف'], y=top_rooms_villas['count'], palette=palette_villas, ax=axes[2, 1])
-axes[2, 1].set_xlabel(get_display(arabic_reshaper.reshape("عدد الغرف")))
-axes[2, 1].set_ylabel(get_display(arabic_reshaper.reshape("عدد الفلل")))
-
-# تحسين توزيع الشكل
 plt.tight_layout()
 st.pyplot(fig)
 
