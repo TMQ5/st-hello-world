@@ -355,26 +355,56 @@ st.markdown("""
 
 
 
-district_avg_space_apartments = None  # تأكد من تعريفه حتى لو لم تتحقق الشروط
+# **تجهيز النصوص العربية**
+title_text_apartments = get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للشقق"))
+title_text_villas = get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للفلل"))
+xlabel_text = get_display(arabic_reshaper.reshape("الحي"))
+ylabel_text = get_display(arabic_reshaper.reshape("متوسط المساحة (م²)"))
 
-if not df_apartments.empty:
-    district_avg_space_apartments = df_apartments.groupby('الحي')['المساحة'].mean().reset_index()
+# **تصفية البيانات للشقق**
+df_filtered_apartments = df_apartments[(df_apartments['المساحة'] <= 300) & 
+                                        (df_apartments['السعر الاجمالي'] > 500) & 
+                                        (df_apartments['الحي'] != ' ')]
 
-try:
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+# **تصفية البيانات للفلل**
+df_filtered_villas = df_villas[(df_villas['المساحة'] <= 300) & 
+                                (df_villas['السعر الاجمالي'] > 500) & 
+                                (df_villas['الحي'] != ' ')]
 
-    if isinstance(district_avg_space_apartments, pd.DataFrame) and not district_avg_space_apartments.empty:
-        sns.barplot(x=district_avg_space_apartments['المساحة'],
-                    y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']],
-                    palette=palette_apartments, ax=axes[0])
-    else:
-        st.warning("⚠️ لا توجد بيانات كافية لعرض مقارنة المساحات للشقق.")
+# **حساب المتوسط لكل حي**
+district_avg_space_apartments = df_filtered_apartments.groupby('الحي')['المساحة'].mean().reset_index()
+district_avg_space_villas = df_filtered_villas.groupby('الحي')['المساحة'].mean().reset_index()
 
-    plt.tight_layout()
-    st.pyplot(fig)
+# **ترتيب الأحياء حسب المتوسط المساحة**
+district_avg_space_apartments = district_avg_space_apartments.sort_values(by='المساحة', ascending=True)
+district_avg_space_villas = district_avg_space_villas.sort_values(by='المساحة', ascending=True)
 
-except Exception as e:
-    st.error(f"❌ حدث خطأ أثناء رسم المخططات: {e}")
+# **رسم المخططين جنبًا إلى جنب**
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# **المخطط الأول - الشقق**
+sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']], 
+            x=district_avg_space_apartments['المساحة'], 
+            palette="mako", ax=axes[0])
+axes[0].set_title(title_text_apartments, fontsize=14)
+axes[0].set_xlabel(ylabel_text, fontsize=12)
+axes[0].set_ylabel(xlabel_text, fontsize=12)
+
+# **المخطط الثاني - الفلل**
+sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_villas['الحي']], 
+            x=district_avg_space_villas['المساحة'], 
+            palette="viridis", ax=axes[1])
+axes[1].set_title(title_text_villas, fontsize=14)
+axes[1].set_xlabel(ylabel_text, fontsize=12)
+axes[1].set_ylabel(xlabel_text, fontsize=12)
+
+# **إضافة العنوان والوصف في Streamlit**
+st.markdown("<h4 style='text-align: center;'>📊 مقارنة المساحات في الأحياء المختلفة للشقق والفلل</h4>", unsafe_allow_html=True)
+
+# **عرض المخططات في Streamlit**
+plt.tight_layout()
+st.pyplot(fig)
+
 
 
 
