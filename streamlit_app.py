@@ -377,14 +377,14 @@ if not df_apartments.empty and not df_villas.empty:
     plt.tight_layout()
     st.pyplot(fig)
 
-st.markdown("""
-<div style="text-align: center; background-color: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 16px;">
-    &#128313; <strong>كم غرفة تحتاج؟</strong> أغلب الشقق المعروضة فيها <strong>3 غرف</strong>، يعني الخيار الأمثل للعوائل المتوسطة.<br><br>
-    &#128313; <strong>تفضل الشقق بمساحات واسعة؟</strong> حي <strong>الملك فهد والمصيف</strong> يوفرون شقق بمساحات أكبر مقارنة بباقي الأحياء.<br><br>
-    &#128313; <strong>تحتاج فيلا بعدد غرف كبير؟</strong> أغلب الفلل تحتوي على <strong>5 غرف</strong>، مما يوفر لك ولعائلتك راحة ومساحة أكبر.<br><br>
-    &#128313; <strong>تبغى فيلا بمساحة كبيرة؟</strong> حي <strong>العليا والقدس</strong> عندهم فلل بمساحات أوسع لو تفضل الراحة والرحابة.
-</div>
-""", unsafe_allow_html=True)
+    st.markdown("""
+    <div style="text-align: center; background-color: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 16px;">
+        &#128313; <strong>كم غرفة تحتاج؟</strong> أغلب الشقق المعروضة فيها <strong>3 غرف</strong>، يعني الخيار الأمثل للعوائل المتوسطة.<br><br>
+        &#128313; <strong>تفضل الشقق بمساحات واسعة؟</strong> حي <strong>الملك فهد والمصيف</strong> يوفرون شقق بمساحات أكبر مقارنة بباقي الأحياء.<br><br>
+        &#128313; <strong>تحتاج فيلا بعدد غرف كبير؟</strong> أغلب الفلل تحتوي على <strong>5 غرف</strong>، مما يوفر لك ولعائلتك راحة ومساحة أكبر.<br><br>
+        &#128313; <strong>تبغى فيلا بمساحة كبيرة؟</strong> حي <strong>العليا والقدس</strong> عندهم فلل بمساحات أوسع لو تفضل الراحة والرحابة.
+    </div>
+    """, unsafe_allow_html=True)
 
 
     
