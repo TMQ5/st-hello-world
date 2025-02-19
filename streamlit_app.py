@@ -5,92 +5,71 @@ import seaborn as sns
 import arabic_reshaper
 from bidi.algorithm import get_display
 
-# تحميل البيانات بعد التنظيف
-villas_file = "villas_data_cleaned.csv"
+# تحميل البيانات
 apartments_file = "apartments_data_cleaned.csv"
-
-df_villas = pd.read_csv(villas_file)
 df_apartments = pd.read_csv(apartments_file)
 
-# التحقق من صحة البيانات
-required_columns = ["عدد الغرف", "السعر الاجمالي", "الحي"]
-for col in required_columns:
-    if col not in df_apartments.columns:
-        st.error(f"❌ العمود '{col}' غير موجود في بيانات الشقق، تحقق من الاسم الصحيح!")
-        st.stop()
+# إعداد الصفحة والعنوان
+st.set_page_config(layout="wide")
 
-# عنوان القصة
-st.title("🏡 بيت العمر.. الحلم الذي يستحق كل خطوة!")
-st.markdown(
-    """
-    <div style="text-align: center;">
-        🏙️ إذا كنت تدور على بيت العمر في الرياض، فأنت في المكان الصح! 🤩
-        <br> هنا بتلقى كل التفاصيل اللي تحتاجها قبل ما تاخذ القرار، عشان تشتري بيتك بثقة وراحة بال.
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown("<h1 style='text-align: center; direction: rtl;'>🏡 بيت العمر.. الحلم الذي يستحق كل خطوة!</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; direction: rtl;'>📊 إذا كنت تبحث عن بيت العمر في الرياض، فأنت في المكان الصحيح! 🤩🏙️ <br> هنا ستجد كل التفاصيل التي تحتاجها قبل اتخاذ القرار، لتتمكن من شراء بيتك بثقة وراحة بال.</p>", unsafe_allow_html=True)
 
-st.markdown(
-    """
-    <div style="text-align: center;">
-        🔍 وش جمعنا لك؟
-        <br> ✅ أكثر الأحياء طلبًا وأفضلها من حيث الخدمات
-        <br> ✅ متوسط الأسعار في كل منطقة 💰
-        <br> ✅ عدد الغرف والمساحات المناسبة لك 🏡
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+# مقدمة النقاط الرئيسية
+st.markdown("""
+<div style="text-align: right; direction: rtl;">
+🔍 ✅ أكثر الأحياء طلبًا وأفضلها من حيث الخدمات <br>
+💰 ✅ متوسط الأسعار في كل منطقة <br>
+🏡 ✅ عدد الغرف والمساحات المناسبة لك <br>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("<h3 style='text-align: center; direction: rtl;'>🔥 باستخدام الأرقام، ستعرف أي خيار هو الأفضل لك!</h3>", unsafe_allow_html=True)
 
 # حساب عدد الشقق في كل حي
 district_counts = df_apartments[df_apartments['الحي'] != ' الرياض ']['الحي'].value_counts().reset_index()
 district_counts.columns = ['الحي', 'count']
-
-# أخذ أكثر 10 أحياء بها شقق
 top_districts = district_counts.head(10)
-
-# حساب متوسط السعر الإجمالي لكل حي واستبعاد القيم غير المنطقية
-district_avg_price = df_apartments[df_apartments['السعر الاجمالي'] > 500].groupby('الحي')['السعر الاجمالي'].mean().reset_index()
-
-# ترتيب الأحياء من الأقل إلى الأعلى في السعر الإجمالي
-district_avg_price = district_avg_price.sort_values(by='السعر الاجمالي', ascending=True)
-
-# أخذ أرخص 10 أحياء
-top_cheapest_districts = district_avg_price.head(10)
 
 # تجهيز النصوص العربية
 title_text_1 = get_display(arabic_reshaper.reshape('ما هي الأحياء التي تحتوي على أكبر عدد من الشقق'))
-title_text_2 = get_display(arabic_reshaper.reshape('ما هي الأحياء الأقل سعرًا في متوسط السعر الإجمالي'))
-xlabel_text = get_display(arabic_reshaper.reshape('الحي'))
+xlabel_text_1 = get_display(arabic_reshaper.reshape('الحي'))
 ylabel_text_1 = get_display(arabic_reshaper.reshape('عدد الشقق'))
+
+# رسم مخطط عدد الشقق
+fig, ax = plt.subplots(figsize=(6, 4))
+sns.barplot(y=top_districts['الحي'], x=top_districts['count'], palette="mako", orient='h', ax=ax)
+ax.set_yticklabels([get_display(arabic_reshaper.reshape(label.get_text())) for label in ax.get_yticklabels()])
+ax.set_xlabel(xlabel_text_1, fontsize=12)
+ax.set_ylabel(ylabel_text_1, fontsize=12)
+ax.set_title(title_text_1, fontsize=14)
+ax.invert_yaxis()  # جعل الترتيب من اليمين لليسار
+
+# حساب متوسط السعر الإجمالي لكل حي
+district_avg_price = df_apartments[df_apartments['السعر الاجمالي'] > 500].groupby('الحي')['السعر الاجمالي'].mean().reset_index()
+district_avg_price = district_avg_price.sort_values(by='السعر الاجمالي', ascending=True)
+top_cheapest_districts = district_avg_price.head(10)
+
+# تجهيز النصوص العربية للرسم الثاني
+title_text_2 = get_display(arabic_reshaper.reshape('ما هي الأحياء الأقل سعرًا في متوسط السعر الإجمالي'))
+xlabel_text_2 = get_display(arabic_reshaper.reshape('الحي'))
 ylabel_text_2 = get_display(arabic_reshaper.reshape('متوسط السعر الإجمالي'))
 
-# رسم المخططات البيانية
-fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+# رسم مخطط متوسط السعر
+fig2, ax2 = plt.subplots(figsize=(6, 4))
+sns.barplot(y=top_cheapest_districts['الحي'], x=top_cheapest_districts['السعر الاجمالي'], palette="mako", orient='h', ax=ax2)
+ax2.set_yticklabels([get_display(arabic_reshaper.reshape(label.get_text())) for label in ax2.get_yticklabels()])
+ax2.set_xlabel(xlabel_text_2, fontsize=12)
+ax2.set_ylabel(ylabel_text_2, fontsize=12)
+ax2.set_title(title_text_2, fontsize=14)
+ax2.invert_yaxis()  # جعل الترتيب من اليمين لليسار
 
-# الرسم الأول - عدد الشقق في كل حي
-sns.barplot(ax=axes[0], x=top_districts['الحي'], y=top_districts['count'], palette="mako")
-axes[0].set_xticklabels([get_display(arabic_reshaper.reshape(label.get_text())) for label in axes[0].get_xticklabels()], rotation=45)
-axes[0].set_xlabel(xlabel_text, fontsize=12)
-axes[0].set_ylabel(ylabel_text_1, fontsize=12)
-axes[0].set_title(title_text_1, fontsize=16)
-
-# الرسم الثاني - متوسط الأسعار في كل حي
-sns.barplot(ax=axes[1], x=top_cheapest_districts['الحي'], y=top_cheapest_districts['السعر الاجمالي'], palette="mako")
-axes[1].set_xticklabels([get_display(arabic_reshaper.reshape(label.get_text())) for label in axes[1].get_xticklabels()], rotation=45)
-axes[1].set_xlabel(xlabel_text, fontsize=12)
-axes[1].set_ylabel(ylabel_text_2, fontsize=12)
-axes[1].set_title(title_text_2, fontsize=16)
-
-st.pyplot(fig)
+# عرض المخططات جنبًا إلى جنب
+col1, col2 = st.columns(2)
+with col1:
+    st.pyplot(fig)
+with col2:
+    st.pyplot(fig2)
 
 # رسالة ختامية
-st.markdown(
-    """
-    <div style="text-align: center;">
-        🎉 استمتع بتحليل البيانات واختار بيت العمر المثالي 🏡
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown("<div style='text-align: center; direction: rtl; background-color: #eafbea; padding: 10px; border-radius: 10px;'>🎉 استمتع بتحليل البيانات واختيار بيت العمر المثالي 🏡</div>", unsafe_allow_html=True)
