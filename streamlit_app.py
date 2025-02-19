@@ -7,12 +7,9 @@ from bidi.algorithm import get_display
 import matplotlib.ticker as ticker
 
 # تحميل البيانات
-@st.cache
-def load_data(file_path):
-    return pd.read_csv(file_path)
+df_apartments = pd.read_csv("apartments_data_cleaned.csv")
+df_villas = pd.read_csv("villas_data_cleaned.csv")
 
-df_apartments = load_data("apartments_data_cleaned.csv")
-df_villas = load_data("villas_data_cleaned.csv")
 
 
 # إعداد الصفحة والعنوان
