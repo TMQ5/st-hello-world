@@ -219,7 +219,7 @@ else:
     final_filtered_df = pd.DataFrame()  # في حال كان `filtered_df` فارغًا من البداية
 
 # عرض النتائج بمحاذاة اليمين
-if not final_filtered_df.empty():
+if not final_filtered_df.empty:
     avg_price = final_filtered_df['السعر الاجمالي'].mean()
     count_properties = len(final_filtered_df)
 
