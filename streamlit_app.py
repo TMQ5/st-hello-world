@@ -176,8 +176,10 @@ df_apartments['الحي'] = df_apartments['الحي'].astype(str).str.strip()
 df_villas['الحي'] = df_villas['الحي'].astype(str).str.strip()
 
 # تصفية البيانات لاستبعاد "الرياض" والقيم الفارغة
-df_apartments_filtered = df_apartments[(df_apartments['الحي'] != 'الرياض') & (df_apartments['الحي'].notna())]
-df_villas_filtered = df_villas[(df_villas['الحي'] != 'الرياض') & (df_villas['الحي'].notna())]
+# تنظيف عمود الحي بإزالة القيم الفارغة
+df_apartments_filtered = df_apartments[(df_apartments['الحي'] != 'الرياض') & (df_apartments['الحي'].notna()) & (df_apartments['الحي'] != '')]
+df_villas_filtered = df_villas[(df_villas['الحي'] != 'الرياض') & (df_villas['الحي'].notna()) & (df_villas['الحي'] != '')]
+
 
 
 
