@@ -30,9 +30,20 @@ st.markdown("""
 st.markdown("<h3 style='text-align: center; direction: rtl;'>🔥 باستخدام الأرقام، ستعرف أي خيار هو الأفضل لك!</h3>", unsafe_allow_html=True)
 
 # حساب عدد الشقق في كل حي
-district_counts_apartments = df_apartments[df_apartments['الحي'] != ' الرياض ']['الحي'].value_counts().reset_index()
-district_counts_apartments.columns = ['الحي', 'count']
-top_districts_apartments = district_counts_apartments.head(10)
+# تصفية البيانات للشقق
+df_filtered_apartments = df_apartments[(df_apartments['المساحة'] <= 300) & 
+                                        (df_apartments['السعر الاجمالي'] > 500) & 
+                                        (df_apartments['الحي'] != ' ')]
+
+# التحقق من أن البيانات ليست فارغة
+if not df_filtered_apartments.empty:
+    # حساب المتوسط لكل حي
+    district_avg_space_apartments = df_filtered_apartments.groupby('الحي')['المساحة'].mean().reset_index()
+    district_avg_space_apartments = district_avg_space_apartments.sort_values(by='المساحة', ascending=True)
+    district_avg_space_apartments = district_avg_space_apartments.head(10)
+else:
+    district_avg_space_apartments = None  # تعيينها إلى None إذا كانت البيانات فارغة
+
 
 # حساب عدد الفلل في كل حي
 district_counts_villas = df_villas[df_villas['الحي'] != ' الرياض ']['الحي'].value_counts().reset_index()
@@ -60,6 +71,13 @@ fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
 # عدد الشقق في كل حي
 axes[0].set_title(get_display(arabic_reshaper.reshape("ما هي الأحياء التي تحتوي على أكبر عدد من الشقق؟")))
+if district_avg_space_apartments is not None and not district_avg_space_apartments.empty:
+    sns.barplot(x=district_avg_space_apartments['المساحة'], 
+                y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']], 
+                palette=palette_apartments, ax=axes[0])
+else:
+    st.warning("لا توجد بيانات كافية لعرض مقارنة المساحات للشقق.")
+
 sns.barplot(y=[get_display(arabic_reshaper.reshape(label)) for label in top_districts_apartments['الحي']], 
             x=top_districts_apartments['count'], palette=palette_apartments, orient='h', ax=axes[0])
 axes[0].set_xlabel(get_display(arabic_reshaper.reshape("عدد الشقق")))
