@@ -31,12 +31,12 @@ st.markdown("""
 st.markdown("<h3 style='text-align: center; direction: rtl;'>🔥 باستخدام الأرقام، ستعرف أي خيار هو الأفضل لك!</h3>", unsafe_allow_html=True)
 
 # حساب عدد الشقق في كل حي
-district_counts_apartments = df_apartments['الحي'].value_counts().reset_index()
+district_counts_apartments = df_apartments[df_apartments['الحي'] != ' الرياض ']['الحي'].value_counts().reset_index()
 district_counts_apartments.columns = ['الحي', 'count']
 top_districts_apartments = district_counts_apartments.head(10)
 
 # حساب عدد الفلل في كل حي
-district_counts_villas = df_villas['الحي'].value_counts().reset_index()
+district_counts_villas = df_villas[df_villas['الحي'] != ' الرياض ']['الحي'].value_counts().reset_index()
 district_counts_villas.columns = ['الحي', 'count']
 top_districts_villas = district_counts_villas.head(10)
 
