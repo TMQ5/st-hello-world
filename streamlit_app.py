@@ -182,7 +182,7 @@ df_villas_filtered = df_villas[(df_villas['الحي'] != 'الرياض') & (df_v
 property_type = st.radio("🏡 اختر نوع العقار:", ["شقة", "فيلا"])
 
 # اختيار الحي بناءً على نوع العقار
-st.markdown("<h4 style='text-align: right;'>📍 اختر الحي:</h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: right;'>:اختر الحي 📍</h4>", unsafe_allow_html=True)
 if property_type == "شقة":
     selected_district = st.selectbox("", df_apartments_filtered['الحي'].unique())
     filtered_df = df_apartments_filtered[df_apartments_filtered['الحي'] == selected_district]
@@ -196,12 +196,12 @@ final_filtered_df = pd.DataFrame()
 # التحقق من أن الفلترة السابقة ليست فارغة قبل تحديد عدد الغرف والمساحة
 if not filtered_df.empty:
     # اختيار عدد الغرف
-    st.markdown("<h4 style='text-align: right;'>🛏️ اختر عدد الغرف:</h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: right;'>  :اختر عدد الغرف 🛏️</h4>", unsafe_allow_html=True)
     room_options = sorted(filtered_df['عدد الغرف'].dropna().unique())  # إزالة القيم الفارغة
     selected_rooms = st.selectbox("", room_options) if room_options else None
 
     # اختيار المساحة
-    st.markdown("<h4 style='text-align: right;'>📏 اختر المساحة:</h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: right;'>:اختر المساحة 📏</h4>", unsafe_allow_html=True)
     space_options = sorted(filtered_df['المساحة'].dropna().unique())  # إزالة القيم الفارغة
     selected_space = st.selectbox("", space_options) if space_options else None
 
