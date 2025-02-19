@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import arabic_reshaper
 from bidi.algorithm import get_display
+import matplotlib.ticker as ticker
+
 
 # تحميل البيانات
 apartments_file = "apartments_data_cleaned.csv"
@@ -63,6 +65,11 @@ ax2.set_xlabel(xlabel_text_2, fontsize=12)
 ax2.set_ylabel(ylabel_text_2, fontsize=12)
 ax2.set_title(title_text_2, fontsize=14)
 ax2.invert_yaxis()  # جعل الترتيب من اليمين لليسار
+
+# ضبط تنسيق الأرقام بحيث تكون كاملة بدون الصيغة العلمية
+ax2.xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x):,}'))
+plt.ticklabel_format(style='plain', axis='x')  # منع الصيغة العلمية
+
 
 # عرض المخططات جنبًا إلى جنب
 col1, col2 = st.columns(2)
