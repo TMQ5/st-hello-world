@@ -119,6 +119,48 @@ sns.barplot(x=top_rooms_villas['عدد الغرف'], y=top_rooms_villas['count']
 axes[2, 1].set_xlabel(get_display(arabic_reshaper.reshape("عدد الغرف")))
 axes[2, 1].set_ylabel(get_display(arabic_reshaper.reshape("عدد الفلل")))
 
+# 🔹 7️⃣ مقارنة المساحات في الأحياء المختلفة للشقق
+title_apartments = get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للشقق"))
+xlabel_apartments = get_display(arabic_reshaper.reshape("الحي"))
+ylabel_apartments = get_display(arabic_reshaper.reshape("المتوسط المساحة (م²)"))
+
+# تصفية البيانات للشقق
+df_filtered_apartments = df_apartments[(df_apartments['المساحة'] <= 300) & 
+                                        (df_apartments['السعر الاجمالي'] > 500) & 
+                                        (df_apartments['الحي'] != ' ')]
+
+# حساب المتوسط لكل حي
+district_avg_space_apartments = df_filtered_apartments.groupby('الحي')['المساحة'].mean().reset_index()
+district_avg_space_apartments = district_avg_space_apartments.sort_values(by='المساحة', ascending=True)
+
+# رسم Bar Plot
+axes[3, 0].set_title(title_apartments, fontsize=14)
+sns.barplot(x=district_avg_space_apartments['المساحة'], y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']], 
+            palette=palette_apartments, ax=axes[3, 0])
+axes[3, 0].set_xlabel(ylabel_apartments, fontsize=12)
+axes[3, 0].set_ylabel(xlabel_apartments, fontsize=12)
+
+# 🔹 8️⃣ مقارنة المساحات في الأحياء المختلفة للفلل
+title_villas = get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للفلل"))
+xlabel_villas = get_display(arabic_reshaper.reshape("الحي"))
+ylabel_villas = get_display(arabic_reshaper.reshape("المتوسط المساحة (م²)"))
+
+# تصفية البيانات للفلل
+df_filtered_villas = df_villas[(df_villas['المساحة'] <= 300) & 
+                                (df_villas['السعر الاجمالي'] > 500) & 
+                                (df_villas['الحي'] != ' ')]
+
+# حساب المتوسط لكل حي
+district_avg_space_villas = df_filtered_villas.groupby('الحي')['المساحة'].mean().reset_index()
+district_avg_space_villas = district_avg_space_villas.sort_values(by='المساحة', ascending=True)
+
+# رسم Bar Plot
+axes[3, 1].set_title(title_villas, fontsize=14)
+sns.barplot(x=district_avg_space_villas['المساحة'], y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_villas['الحي']], 
+            palette=palette_villas, ax=axes[3, 1])
+axes[3, 1].set_xlabel(ylabel_villas, fontsize=12)
+axes[3, 1].set_ylabel(xlabel_villas, fontsize=12)
+
 
 # تحسين توزيع الشكل
 plt.tight_layout()
