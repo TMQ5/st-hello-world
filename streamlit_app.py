@@ -50,15 +50,6 @@ district_avg_price_villas = df_villas[df_villas['السعر الاجمالي'] >
 district_avg_price_villas = district_avg_price_villas.sort_values(by='السعر الاجمالي', ascending=True)
 top_cheapest_districts_villas = district_avg_price_villas.head(10)
 
-# حساب عدد الشقق لكل عدد غرف
-room_counts_apartments = df_apartments["عدد الغرف"].value_counts().reset_index()
-room_counts_apartments.columns = ["عدد الغرف", "count"]
-top_rooms_apartments = room_counts_apartments.head(10)
-
-# حساب عدد الفلل لكل عدد غرف
-room_counts_villas = df_villas["عدد الغرف"].value_counts().reset_index()
-room_counts_villas.columns = ["عدد الغرف", "count"]
-top_rooms_villas = room_counts_villas.head(10)
 
 
 # إنشاء figure و 6 محاور (subplot) بدلاً من 4
@@ -150,6 +141,17 @@ sns.barplot(x=district_avg_space_villas['المساحة'], y=[get_display(arabic
             palette=palette_villas, ax=axes[3, 1])
 axes[3, 1].set_xlabel(ylabel_villas, fontsize=12)
 axes[3, 1].set_ylabel(xlabel_villas, fontsize=12)
+
+
+# حساب عدد الشقق لكل عدد غرف
+room_counts_apartments = df_apartments["عدد الغرف"].value_counts().reset_index()
+room_counts_apartments.columns = ["عدد الغرف", "count"]
+top_rooms_apartments = room_counts_apartments.head(10)
+
+# حساب عدد الفلل لكل عدد غرف
+room_counts_villas = df_villas["عدد الغرف"].value_counts().reset_index()
+room_counts_villas.columns = ["عدد الغرف", "count"]
+top_rooms_villas = room_counts_villas.head(10)
 
 # 7️⃣ توزيع عدد الغرف في الشقق
 axes[2, 0].set_title(get_display(arabic_reshaper.reshape("ما هو توزيع عدد الغرف في الشقق؟")))
