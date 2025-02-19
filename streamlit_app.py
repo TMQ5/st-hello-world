@@ -6,16 +6,6 @@ import arabic_reshaper
 from bidi.algorithm import get_display
 import matplotlib.ticker as ticker
 
-# يجب أن يكون أول أمر في التطبيق قبل أي كود Streamlit آخر
-st.set_page_config(layout="wide")
-
-# إضافة صورة الهيدر
-st.markdown("""
-<div style="text-align: center;">
-    <img src="https://cdn.discordapp.com/attachments/1340682396156039210/1341820998743494676/banner-riyadh-city-flat-line-style-riyadh-city-line-art-all-linear-buildings-separated-customizable_310772-133-removebg-preview.png" 
-         alt="Riyadh City Banner" width="100%">
-</div>
-""", unsafe_allow_html=True)
 
 # تحميل البيانات مع التحقق من وجودها
 try:
