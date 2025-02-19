@@ -224,7 +224,7 @@ if not final_filtered_df.empty:
     count_properties = len(final_filtered_df)
     st.markdown(f"""
     <div style="text-align: right;">
-        <h3>📊 الإحصائيات:</h3>
+        <h3>:الإحصائيات📊 </h3>
         <ul style="list-style-position: inside; padding-right: 0;">
             <li>متوسط السعر الإجمالي: <strong>{avg_price:,.0f}</strong> ريال</li>
             <li>عدد {property_type} بهذه المواصفات: <strong>{count_properties}</strong></li>
