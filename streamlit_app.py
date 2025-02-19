@@ -161,73 +161,6 @@
 
 # # رسالة ختامية
 # st.markdown("<div style='text-align: center; direction: rtl; background-color: #eafbea; padding: 10px; border-radius: 10px;'>🎉  ✨🔮 الحين جاء دورك!😁 وش رأيك تختار بيت العمر المثالي وتستمتع بتحليل البيانات   🏡</div>", unsafe_allow_html=True)
-# # تنظيف عمود الحي بإزالة المسافات الزائدة في البداية والنهاية
-# df_apartments['الحي'] = df_apartments['الحي'].astype(str).str.strip()
-# df_villas['الحي'] = df_villas['الحي'].astype(str).str.strip()
-
-# # تصفية البيانات لاستبعاد "الرياض" والقيم الفارغة
-# df_apartments_filtered = df_apartments[(df_apartments['الحي'] != 'الرياض') & (df_apartments['الحي'].notna()) & (df_apartments['الحي'] != '')]
-# df_villas_filtered = df_villas[(df_villas['الحي'] != 'الرياض') & (df_villas['الحي'].notna()) & (df_villas['الحي'] != '')]
-
-# # # عنوان اختيار نوع العقار بنفس تنسيق الحي وعدد الغرف
-# st.markdown("<h4 style='text-align: right;'>  :اختر نوع العقار 🏡</h4>", unsafe_allow_html=True)
-
-# # # عنصر الاختيار بمحاذاة اليمين
-# property_type = st.radio("", ["شقة", "فيلا"], horizontal=True)
-
-
-
-
-# # اختيار الحي بناءً على نوع العقار
-# st.markdown("<h4 style='text-align: right;'>:اختر الحي 📍</h4>", unsafe_allow_html=True)
-# if property_type == "شقة":
-#     selected_district = st.selectbox("", df_apartments_filtered['الحي'].unique())
-#     filtered_df = df_apartments_filtered[df_apartments_filtered['الحي'] == selected_district]
-# else:
-#     selected_district = st.selectbox("", df_villas_filtered['الحي'].unique())
-#     filtered_df = df_villas_filtered[df_villas_filtered['الحي'] == selected_district]
-
-# # تأكد من أن final_filtered_df معرف دائمًا
-# final_filtered_df = pd.DataFrame()
-
-# # التحقق من أن الفلترة السابقة ليست فارغة قبل تحديد عدد الغرف والمساحة
-# if not filtered_df.empty:
-#     # اختيار عدد الغرف
-#     st.markdown("<h4 style='text-align: right;'>  :اختر عدد الغرف 🛏️</h4>", unsafe_allow_html=True)
-#     room_options = sorted(filtered_df['عدد الغرف'].dropna().unique())  # إزالة القيم الفارغة
-#     selected_rooms = st.selectbox("", room_options) if room_options else None
-
-#     # اختيار المساحة
-#     st.markdown("<h4 style='text-align: right;'>:اختر المساحة 📏</h4>", unsafe_allow_html=True)
-#     space_options = sorted(filtered_df['المساحة'].dropna().unique())  # إزالة القيم الفارغة
-#     selected_space = st.selectbox("", space_options) if space_options else None
-
-#     # تصفية البيانات بناءً على عدد الغرف والمساحة (تأكد من أن القيم ليست None)
-#     if selected_rooms is not None and selected_space is not None:
-#         final_filtered_df = filtered_df[
-#             (filtered_df['عدد الغرف'] == selected_rooms) & 
-#             (filtered_df['المساحة'] == selected_space)
-#         ]
-
-# # التحقق من عدم كون final_filtered_df فارغًا قبل استخدامه
-# if not final_filtered_df.empty:
-#     avg_price = final_filtered_df['السعر الاجمالي'].mean()
-#     count_properties = len(final_filtered_df)
-
-#     st.markdown(f"""
-#     <div style="text-align: right;">
-#         <h3> :الإحصائيات 📊</h3>
-#         <p>متوسط السعر الإجمالي: <strong>{avg_price:,.0f}</strong> ريال</p>
-#         <p>عدد {property_type} بهذه المواصفات: <strong>{count_properties}</strong></p>
-#     </div>
-#     """, unsafe_allow_html=True)
-# else:
-#     st.markdown("""
-#     <div style="text-align: right; color: red;">
-#         ❌ لا توجد عقارات بهذه المواصفات في البيانات.
-#     </div>
-#     """, unsafe_allow_html=True)
-
 
 
 
@@ -407,6 +340,13 @@ plt.tight_layout()
 st.pyplot(fig)
 
 
+# **إضافة تحليل البيانات بعد المخططات**
+st.markdown("""
+<div style="text-align: center; background-color: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 16px;">
+     <strong>كم غرفة تحتاج؟</strong> أغلب الشقق المعروضة فيها <strong>3 غرف</strong>، يعني الخيار الأمثل للعوائل المتوسطة 🔹<br>  
+     <strong>تفضل الشقق بمساحات واسعة؟</strong> حي <strong>الملك فهد والمصيف</strong> يوفرون شقق بمساحات أكبر مقارنة بباقي الأحياء 🔹
+</div>
+""", unsafe_allow_html=True)
 
 
 
@@ -438,12 +378,89 @@ if not df_apartments.empty and not df_villas.empty:
 
     plt.tight_layout()
     st.pyplot(fig)
+
+    
 else:
     st.warning("⚠️ لا توجد بيانات كافية لتحليل توزيع عدد الغرف.")
 
 # رسالة ختامية
 st.markdown("<div style='text-align: center; direction: rtl; background-color: #eafbea; padding: 10px; border-radius: 10px;'>🎉  ✨🔮 الحين جاء دورك!😁 وش رأيك تختار بيت العمر المثالي وتستمتع بتحليل البيانات   🏡</div>", unsafe_allow_html=True)
 
+# **إضافة تحليل البيانات بعد المخططات**
+st.markdown("""
+<div style="text-align: center; background-color: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 16px;">
+    🔹 <strong>كم غرفة تحتاج؟</strong> أغلب الشقق المعروضة فيها <strong>3 غرف</strong>، يعني الخيار الأمثل للعوائل المتوسطة.<br>  
+    🔹 <strong>تفضل الشقق بمساحات واسعة؟</strong> حي <strong>الملك فهد والمصيف</strong> يوفرون شقق بمساحات أكبر مقارنة بباقي الأحياء.<br><br>
+    
+    🔹 <strong>تحتاج فيلا بعدد غرف كبير؟</strong> أغلب الفلل تحتوي على <strong>5 غرف</strong>، مما يوفر لك ولعائلتك راحة ومساحة أكبر.<br>  
+    🔹 <strong>تبغى فيلا بمساحة كبيرة؟</strong> حي <strong>العليا والقدس</strong> عندهم فلل بمساحات أوسع لو تفضل الراحة والرحابة.
+</div>
+""", unsafe_allow_html=True)
+
+# تنظيف عمود الحي بإزالة المسافات الزائدة في البداية والنهاية
+df_apartments['الحي'] = df_apartments['الحي'].astype(str).str.strip()
+df_villas['الحي'] = df_villas['الحي'].astype(str).str.strip()
+
+# تصفية البيانات لاستبعاد "الرياض" والقيم الفارغة
+df_apartments_filtered = df_apartments[(df_apartments['الحي'] != 'الرياض') & (df_apartments['الحي'].notna()) & (df_apartments['الحي'] != '')]
+df_villas_filtered = df_villas[(df_villas['الحي'] != 'الرياض') & (df_villas['الحي'].notna()) & (df_villas['الحي'] != '')]
+
+# # عنوان اختيار نوع العقار بنفس تنسيق الحي وعدد الغرف
+st.markdown("<h4 style='text-align: right;'>  :اختر نوع العقار 🏡</h4>", unsafe_allow_html=True)
+
+# # عنصر الاختيار بمحاذاة اليمين
+property_type = st.radio("", ["شقة", "فيلا"], horizontal=True)
+
+
+# اختيار الحي بناءً على نوع العقار
+st.markdown("<h4 style='text-align: right;'>:اختر الحي 📍</h4>", unsafe_allow_html=True)
+if property_type == "شقة":
+    selected_district = st.selectbox("", df_apartments_filtered['الحي'].unique())
+    filtered_df = df_apartments_filtered[df_apartments_filtered['الحي'] == selected_district]
+else:
+    selected_district = st.selectbox("", df_villas_filtered['الحي'].unique())
+    filtered_df = df_villas_filtered[df_villas_filtered['الحي'] == selected_district]
+
+# تأكد من أن final_filtered_df معرف دائمًا
+final_filtered_df = pd.DataFrame()
+
+# التحقق من أن الفلترة السابقة ليست فارغة قبل تحديد عدد الغرف والمساحة
+if not filtered_df.empty:
+    # اختيار عدد الغرف
+    st.markdown("<h4 style='text-align: right;'>  :اختر عدد الغرف 🛏️</h4>", unsafe_allow_html=True)
+    room_options = sorted(filtered_df['عدد الغرف'].dropna().unique())  # إزالة القيم الفارغة
+    selected_rooms = st.selectbox("", room_options) if room_options else None
+
+    # اختيار المساحة
+    st.markdown("<h4 style='text-align: right;'>:اختر المساحة 📏</h4>", unsafe_allow_html=True)
+    space_options = sorted(filtered_df['المساحة'].dropna().unique())  # إزالة القيم الفارغة
+    selected_space = st.selectbox("", space_options) if space_options else None
+
+    # تصفية البيانات بناءً على عدد الغرف والمساحة (تأكد من أن القيم ليست None)
+    if selected_rooms is not None and selected_space is not None:
+        final_filtered_df = filtered_df[
+            (filtered_df['عدد الغرف'] == selected_rooms) & 
+            (filtered_df['المساحة'] == selected_space)
+        ]
+
+# التحقق من عدم كون final_filtered_df فارغًا قبل استخدامه
+if not final_filtered_df.empty:
+    avg_price = final_filtered_df['السعر الاجمالي'].mean()
+    count_properties = len(final_filtered_df)
+
+    st.markdown(f"""
+    <div style="text-align: right;">
+        <h3> :الإحصائيات 📊</h3>
+        <p>متوسط السعر الإجمالي: <strong>{avg_price:,.0f}</strong> ريال</p>
+        <p>عدد {property_type} بهذه المواصفات: <strong>{count_properties}</strong></p>
+    </div>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+    <div style="text-align: right; color: red;">
+        ❌ لا توجد عقارات بهذه المواصفات في البيانات.
+    </div>
+    """, unsafe_allow_html=True)
 
 
 
