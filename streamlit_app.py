@@ -338,7 +338,7 @@ plt.tight_layout()
 st.pyplot(fig)
 st.markdown("""
 <div style="text-align: center; background-color: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 16px;">
-    &#128313; <strong>تفضل الشقق بمساحات واسعة؟</strong> حي <strong>الملك فهد والمصيف</strong> يوفرون شقق بمساحات أكبر مقارنة بباقي الأحياء.<br><br>
+     <strong>تفضل الشقق بمساحات واسعة؟</strong> حي <strong>الملك فهد والمصيف</strong> يوفرون شقق بمساحات أكبر مقارنة بباقي الأحياء &#128313;<br><br>
     &#128313; <strong>تبغى فيلا بمساحة كبيرة؟</strong> حي <strong>العليا والقدس</strong> عندهم فلل بمساحات أوسع لو تفضل الراحة والرحابة.
 </div>
 """, unsafe_allow_html=True)
