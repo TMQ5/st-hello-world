@@ -50,8 +50,19 @@ district_avg_price_villas = df_villas[df_villas['السعر الاجمالي'] >
 district_avg_price_villas = district_avg_price_villas.sort_values(by='السعر الاجمالي', ascending=True)
 top_cheapest_districts_villas = district_avg_price_villas.head(10)
 
-# إنشاء figure و 4 محاور (subplot)
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+# حساب عدد الشقق لكل عدد غرف
+room_counts_apartments = df_apartments["عدد الغرف"].value_counts().reset_index()
+room_counts_apartments.columns = ["عدد الغرف", "count"]
+top_rooms_apartments = room_counts_apartments.head(10)
+
+# حساب عدد الفلل لكل عدد غرف
+room_counts_villas = df_villas["عدد الغرف"].value_counts().reset_index()
+room_counts_villas.columns = ["عدد الغرف", "count"]
+top_rooms_villas = room_counts_villas.head(10)
+
+
+# إنشاء figure و 6 محاور (subplot) بدلاً من 4
+fig, axes = plt.subplots(3, 2, figsize=(14, 15))
 
 # تحديد الألوان: 
 palette_apartments = "mako"  # ألوان خاصة بالشقق
@@ -94,6 +105,20 @@ axes[1, 1].xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x)
 # تدوير النصوص في المحور X
 axes[1, 0].tick_params(axis='x', rotation=45)
 axes[1, 1].tick_params(axis='x', rotation=45)
+
+
+# 5️⃣ توزيع عدد الغرف في الشقق
+axes[2, 0].set_title(get_display(arabic_reshaper.reshape("ما هو توزيع عدد الغرف في الشقق؟")))
+sns.barplot(x=top_rooms_apartments['عدد الغرف'], y=top_rooms_apartments['count'], palette=palette_apartments, ax=axes[2, 0])
+axes[2, 0].set_xlabel(get_display(arabic_reshaper.reshape("عدد الغرف")))
+axes[2, 0].set_ylabel(get_display(arabic_reshaper.reshape("عدد الشقق")))
+
+# 6️⃣ توزيع عدد الغرف في الفلل
+axes[2, 1].set_title(get_display(arabic_reshaper.reshape("ما هو توزيع عدد الغرف في الفلل؟")))
+sns.barplot(x=top_rooms_villas['عدد الغرف'], y=top_rooms_villas['count'], palette=palette_villas, ax=axes[2, 1])
+axes[2, 1].set_xlabel(get_display(arabic_reshaper.reshape("عدد الغرف")))
+axes[2, 1].set_ylabel(get_display(arabic_reshaper.reshape("عدد الفلل")))
+
 
 # تحسين توزيع الشكل
 plt.tight_layout()
