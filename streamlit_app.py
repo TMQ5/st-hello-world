@@ -376,8 +376,7 @@ if not df_apartments.empty and not df_villas.empty:
 
     plt.tight_layout()
     st.pyplot(fig)
-    st.markdown("""
-    st.markdown("""
+
 st.markdown("""
 <div style="text-align: center; background-color: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 16px;">
     &#128313; <strong>كم غرفة تحتاج؟</strong> أغلب الشقق المعروضة فيها <strong>3 غرف</strong>، يعني الخيار الأمثل للعوائل المتوسطة.<br><br>
