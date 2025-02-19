@@ -337,6 +337,64 @@ axes[1].xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{int(x):,}
 plt.tight_layout()
 st.pyplot(fig)
 
+
+# التحقق من أن البيانات ليست فارغة قبل الرسم
+if not df_apartments.empty and not df_villas.empty:
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # المساحات في الأحياء المختلفة للشقق
+    axes[0].set_title(get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للشقق")))
+    sns.barplot(x=district_avg_space_apartments['المساحة'], 
+                y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_apartments['الحي']], 
+                palette=palette_apartments, ax=axes[0])
+    axes[0].set_xlabel(get_display(arabic_reshaper.reshape("متوسط المساحة (م²)")))
+    axes[0].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
+
+    # المساحات في الأحياء المختلفة للفلل
+    axes[1].set_title(get_display(arabic_reshaper.reshape("مقارنة المساحات في الأحياء المختلفة للفلل")))
+    sns.barplot(x=district_avg_space_villas['المساحة'], 
+                y=[get_display(arabic_reshaper.reshape(label)) for label in district_avg_space_villas['الحي']], 
+                palette=palette_villas, ax=axes[1])
+    axes[1].set_xlabel(get_display(arabic_reshaper.reshape("متوسط المساحة (م²)")))
+    axes[1].set_ylabel(get_display(arabic_reshaper.reshape("الحي")))
+
+    plt.tight_layout()
+    st.pyplot(fig)
+else:
+    st.warning("⚠️ لا توجد بيانات كافية لمقارنة المساحات في الأحياء المختلفة.")
+
+
+# التحقق من أن البيانات ليست فارغة قبل الرسم
+if not df_apartments.empty and not df_villas.empty:
+    # حساب عدد الغرف للشقق
+    room_counts_apartments = df_apartments["عدد الغرف"].value_counts().reset_index()
+    room_counts_apartments.columns = ["عدد الغرف", "count"]
+    top_rooms_apartments = room_counts_apartments.head(10)
+
+    # حساب عدد الغرف للفلل
+    room_counts_villas = df_villas["عدد الغرف"].value_counts().reset_index()
+    room_counts_villas.columns = ["عدد الغرف", "count"]
+    top_rooms_villas = room_counts_villas.head(10)
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # توزيع عدد الغرف في الشقق
+    axes[0].set_title(get_display(arabic_reshaper.reshape("ما هو توزيع عدد الغرف في الشقق؟")))
+    sns.barplot(x=top_rooms_apartments['عدد الغرف'], y=top_rooms_apartments['count'], palette=palette_apartments, ax=axes[0])
+    axes[0].set_xlabel(get_display(arabic_reshaper.reshape("عدد الغرف")))
+    axes[0].set_ylabel(get_display(arabic_reshaper.reshape("عدد الشقق")))
+
+    # توزيع عدد الغرف في الفلل
+    axes[1].set_title(get_display(arabic_reshaper.reshape("ما هو توزيع عدد الغرف في الفلل؟")))
+    sns.barplot(x=top_rooms_villas['عدد الغرف'], y=top_rooms_villas['count'], palette=palette_villas, ax=axes[1])
+    axes[1].set_xlabel(get_display(arabic_reshaper.reshape("عدد الغرف")))
+    axes[1].set_ylabel(get_display(arabic_reshaper.reshape("عدد الفلل")))
+
+    plt.tight_layout()
+    st.pyplot(fig)
+else:
+    st.warning("⚠️ لا توجد بيانات كافية لتحليل توزيع عدد الغرف.")
+
 # رسالة ختامية
 st.markdown("<div style='text-align: center; direction: rtl; background-color: #eafbea; padding: 10px; border-radius: 10px;'>🎉  ✨🔮 الحين جاء دورك!😁 وش رأيك تختار بيت العمر المثالي وتستمتع بتحليل البيانات   🏡</div>", unsafe_allow_html=True)
 
