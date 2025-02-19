@@ -32,7 +32,7 @@ district_counts.columns = ['الحي', 'count']
 top_districts = district_counts.head(10)
 
 # تجهيز النصوص العربية
-title_text_1 = get_display(arabic_reshaper.reshape(' الأحياء التي تحتوي على أكبر عدد من الشقق'))
+title_text_1 = get_display(arabic_reshaper.reshape(' ما هي الأحياء التي تحتوي على أكبر عدد من الشقق؟'))
 xlabel_text_1 = get_display(arabic_reshaper.reshape('الحي'))
 ylabel_text_1 = get_display(arabic_reshaper.reshape('عدد الشقق'))
 
@@ -51,7 +51,7 @@ district_avg_price = district_avg_price.sort_values(by='السعر الاجما�
 top_cheapest_districts = district_avg_price.head(10)
 
 # تجهيز النصوص العربية للرسم الثاني
-title_text_2 = get_display(arabic_reshaper.reshape('  الأحياء الأقل سعرًا في متوسط السعر الإجمالي'))
+title_text_2 = get_display(arabic_reshaper.reshape('ما هي الأحياء الأقل سعراً في متوسط السعر الإجمالي للشقق؟'))
 xlabel_text_2 = get_display(arabic_reshaper.reshape(' متوسط السعر الإجمالي'))
 ylabel_text_2 = get_display(arabic_reshaper.reshape('الحي'))
 
