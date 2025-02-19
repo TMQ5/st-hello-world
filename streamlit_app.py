@@ -9,7 +9,10 @@ import matplotlib.ticker as ticker
 
 # تحميل البيانات
 apartments_file = "apartments_data_cleaned.csv"
+villas_file = "villas_data_cleaned.csv"
+
 df_apartments = pd.read_csv(apartments_file)
+df_villas = pd.read_csv(villas_file)
 
 # إعداد الصفحة والعنوان
 st.set_page_config(layout="wide")
