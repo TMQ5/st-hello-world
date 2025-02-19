@@ -332,8 +332,6 @@ axes[1].set_title(title_text_villas, fontsize=14)
 axes[1].set_xlabel(ylabel_text, fontsize=12)
 axes[1].set_ylabel(xlabel_text, fontsize=12)
 
-# **إضافة العنوان والوصف في Streamlit**
-st.markdown("<h4 style='text-align: center;'>📊 مقارنة المساحات في الأحياء المختلفة للشقق والفلل (أفضل 10 أحياء فقط)</h4>", unsafe_allow_html=True)
 
 # **عرض المخططات في Streamlit**
 plt.tight_layout()
